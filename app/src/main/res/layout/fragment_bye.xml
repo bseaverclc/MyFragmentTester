@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="vertical"
+        >
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="7"
+            android:weightSum="100"
+
+            >
+
+            <!--
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/setToggleBar"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="60"
+                            android:weightSum="100"
+                            app:singleSelection="true"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+
+                            android:background="@color/black"
+
+
+                            >
+                            -->
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:foregroundTint="@color/black"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/set1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 1"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 2"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 3"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 4"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 5"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+
+
+            </RadioGroup>
+
+            <!--
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+            -->
+            <Button
+                android:id="@+id/newGame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:backgroundTint="@color/red"
+                android:text="New\nGame"
+                android:padding="3dp"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                />
+
+            <Button
+                android:id="@+id/saveGame"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:backgroundTint="@color/blue"
+                android:text="Save\nGame"
+                android:padding="3dp"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="100"
+            android:orientation="horizontal"
+            android:layout_weight="80"
+            >
+
+
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="100"
+                android:layout_weight="50"
+                android:background="@color/black">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
+                    android:weightSum="100"
+                    >
+
+                    <Button
+                        android:id="@+id/redColor"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:text="C"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:padding="1dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/redTeamName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:hint="Team Name"
+                        android:textSize="8sp"
+                        android:layout_marginHorizontal="5dp"
+                        android:textAlignment="center"
+                        android:background="@color/white"
+                        />
+
+                    <Button
+                        android:id="@+id/redRotation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:text="Starting\nRotation\n1
+"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+
+                        android:maxLines="3"
+                        android:padding="1dp"
+                        android:textSize="6dp"
+
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="100"
+                    android:orientation="horizontal"
+                    android:layout_weight="50"
+
+                    >
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:layout_weight="50"
+                        >
+
+                        <Button
+                            android:id="@+id/redAce"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Ace\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/red"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="5dp"
+                            />
+
+                        <Button
+                            android:id="@+id/redBlock"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Block\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/red"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="8dp"
+                            />
+
+                        <Button
+                            android:id="@+id/redKill"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Kill\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/red"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="12dp"
+                            />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:layout_weight="50"
+                        android:background="@color/red"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/redHitPct"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Hit %"
+                            android:layout_weight="10"
+                            android:background="@color/red"
+                            android:textColor="@color/black"
+
+                            />
+                        <TextView
+                            android:id="@+id/redPassAvg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Passing Avg"
+                            android:layout_weight="10"
+                            android:background="@color/red"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/redEarnedPct"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Earned %"
+                            android:layout_weight="10"
+                            android:background="@color/red"
+                            android:textColor="@color/black"
+                            />
+                        <Button
+                            android:id="@+id/redScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="00"
+                            android:maxLines="1"
+                            android:layout_weight="40"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/red"
+                            android:autoSizeTextType="uniform"
+                            android:padding="5dp"
+                            />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/redAtkDigRow"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="30"
+                            android:orientation="horizontal"
+                            android:weightSum="100"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:id="@+id/redAttack"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:text="ATK\n0"
+                                android:layout_weight="50"
+                                android:layout_margin="5dp"
+                                android:textColor="@color/black"
+                                android:backgroundTint="@color/yellow"
+                                android:padding="1dp"
+                                android:autoSizeTextType="uniform"
+                                android:maxLines="2"
+
+                                />
+                            <Button
+                                android:id="@+id/redDig"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:text="Dig\n0"
+                                android:padding="1dp"
+                                android:maxLines="2"
+                                android:autoSizeTextType="uniform"
+                                android:layout_weight="50"
+                                android:textColor="@color/black"
+                                android:backgroundTint="@color/yellow"
+                                android:layout_margin="5dp"
+                                />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opponent Errors"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_weight="20"
+                    android:gravity="center"
+                    >
+
+                    <Button
+                        android:id="@+id/redOppAttackErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nAttack\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+
+
+
+
+                        />
+
+                    <Button
+                        android:id="@+id/redOppServeErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nServe\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+                        />
+                    <Button
+                        android:id="@+id/redOppOtherErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nOther\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+
+
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/redServeReceiveText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Serve Receive"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/redServeReceiveRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_weight="12"
+                    android:gravity="center"
+                    >
+
+
+
+
+                    <Button
+                        android:id="@+id/redOne"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="1SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+                        />
+
+                    <Button
+                        android:id="@+id/redTwo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="2SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+                        />
+                    <Button
+                        android:id="@+id/redThree"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="3SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="100"
+                android:layout_weight="50"
+                android:background="@color/black">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
+                    android:weightSum="100"
+                    >
+
+                    <Button
+                        android:id="@+id/blueColor"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:text="C"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/blue"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="1"
+                        android:padding="1dp"
+                        />
+
+                    <EditText
+                        android:id="@+id/blueTeamName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="60"
+                        android:hint="Team Name"
+                        android:textSize="8sp"
+                        android:layout_marginHorizontal="5dp"
+                        android:textAlignment="center"
+                        android:background="@color/white"
+                        />
+
+                    <Button
+                        android:id="@+id/blueRotation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="20"
+                        android:text="Starting\nRotation\n1
+"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/red"
+
+                        android:maxLines="3"
+                        android:padding="1dp"
+                        android:textSize="6dp"
+
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:weightSum="100"
+                    android:orientation="horizontal"
+                    android:layout_weight="50"
+
+                    >
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:layout_weight="50"
+                        android:background="@color/blue"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/blueHitPct"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Hit %"
+                            android:layout_weight="10"
+                            android:background="@color/blue"
+                            android:textColor="@color/black"
+
+                            />
+                        <TextView
+                            android:id="@+id/bluePassAvg"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Passing Avg"
+                            android:layout_weight="10"
+                            android:background="@color/blue"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/blueEarnedPct"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="2dp"
+                            android:gravity="left"
+                            android:text="Earned %"
+                            android:layout_weight="10"
+                            android:background="@color/blue"
+                            android:textColor="@color/black"
+                            />
+                        <Button
+                            android:id="@+id/blueScore"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:text="00"
+                            android:maxLines="1"
+                            android:layout_weight="40"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/blue"
+                            android:autoSizeTextType="uniform"
+                            android:padding="5dp"
+                            />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:id="@+id/blueAttackDigRow"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="30"
+                            android:orientation="horizontal"
+                            android:weightSum="100"
+                            android:gravity="center"
+                            >
+                            <Button
+                                android:id="@+id/blueAttack"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:text="ATK\n0"
+                                android:layout_weight="50"
+                                android:layout_margin="5dp"
+                                android:textColor="@color/black"
+                                android:backgroundTint="@color/yellow"
+                                android:padding="1dp"
+                                android:autoSizeTextType="uniform"
+                                android:maxLines="2"
+
+                                />
+                            <Button
+                                android:id="@+id/blueDig"
+                                android:layout_height="match_parent"
+                                android:layout_width="0dp"
+                                android:text="Dig\n0"
+                                android:padding="1dp"
+                                android:maxLines="2"
+                                android:autoSizeTextType="uniform"
+                                android:layout_weight="50"
+                                android:textColor="@color/black"
+                                android:backgroundTint="@color/yellow"
+                                android:layout_margin="5dp"
+                                />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="100"
+                        android:layout_weight="50"
+                        >
+
+                        <Button
+                            android:id="@+id/blueAce"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Ace\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/blue"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="5dp"
+                            />
+
+                        <Button
+                            android:id="@+id/blueBlock"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Block\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/blue"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="8dp"
+                            />
+
+                        <Button
+                            android:id="@+id/blueKill"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33"
+                            android:text="Kill\n0"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/blue"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            android:padding="12dp"
+                            />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Opponent Errors"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_weight="20"
+                    android:gravity="center"
+                    >
+
+                    <Button
+                        android:id="@+id/blueOppAttackErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nAttack\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/blue"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+
+                        />
+
+                    <Button
+                        android:id="@+id/blueOppServeErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nServe\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/blue"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+                        />
+                    <Button
+                        android:id="@+id/blueOppOtherErr"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="Opp\nOther\nErr\n0"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/blue"
+                        android:autoSizeTextType="uniform"
+                        android:maxLines="4"
+                        android:padding="1dp"
+
+
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/blueServeReceiveText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Serve Receive"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/blueServeReceiveRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_weight="12"
+                    android:gravity="center"
+                    >
+
+
+
+
+                    <Button
+                        android:id="@+id/blueOne"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="1SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+
+
+                        />
+
+                    <Button
+                        android:id="@+id/blueTwo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="2SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+                        />
+                    <Button
+                        android:id="@+id/blueThree"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="33"
+                        android:layout_margin="5dp"
+                        android:text="3SR\n0"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/yellow"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/undoPoint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="Undo\nPoint"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:id="@+id/switchSides"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="Switch\nSides
+"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:id="@+id/gameStats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="Game\nStats"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:id="@+id/pointHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="Point\nHistory"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+</RelativeLayout>
