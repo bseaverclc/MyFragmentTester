@@ -32,6 +32,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         createButtons(v);
+        createEditTexts(v);
         createGame();
         updateScreen();
         setNum = 1;
@@ -85,9 +86,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private int setNum = 0;
 
 
-
-
-    private void createButtons(View view){
+    private void createEditTexts(View view){
         redTeamEditText = view.findViewById(R.id.redTeamName);
         blueTeamEditText = view.findViewById(R.id.blueTeamName);
         redTeamEditText.addTextChangedListener(new TextWatcher() {
@@ -127,6 +126,10 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
             }
         });
+    }
+
+    private void createButtons(View view){
+
 
 
         set1 =  view.findViewById(R.id.set1);

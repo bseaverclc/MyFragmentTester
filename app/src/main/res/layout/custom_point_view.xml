@@ -18,10 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="30"
             android:text="Red Why"
-
-            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
-
-            android:textColor="#4d4d4d"
             android:gravity="center"
             />
 
@@ -31,9 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:text="num"
-
-            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
-            android:layout_marginTop="5dp"
             android:gravity="center"
             />
         <TextView
@@ -42,8 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:text="25-25"
-            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
-
             android:gravity="center"
             />
         <TextView
@@ -52,8 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:text="num"
-            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
-
             android:gravity="center"
             />
         <TextView
@@ -62,8 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="30"
             android:text="blue why"
-            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
-
             android:gravity="center"
             />
 

@@ -1,5 +1,6 @@
 package com.example.myfragmenttester;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,7 +23,8 @@ public class PointHistoryFragment extends Fragment {
  private PointsHistoryAdapter pointsHistoryAdapter;
  private View theView;
 
- private TextView redTextView, blueTextView;
+ private TextView redTextView, blueTextView, setTextView;
+ private TextView redRotation1, redRotation2, redRotation3, redRotation4, redRotation5,redRotation6;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +34,12 @@ public class PointHistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_point_history, container, false);
         theView = v;
+        redRotation1 = theView.findViewById(R.id.redRotation1);
+        redRotation2 = theView.findViewById(R.id.redRotation2);
+        redRotation3 = theView.findViewById(R.id.redRotation3);
+        redRotation4 = theView.findViewById(R.id.redRotation4);
+        redRotation5 = theView.findViewById(R.id.redRotation5);
+        redRotation6 = theView.findViewById(R.id.redRotation6);
         return v;
 
 
@@ -46,9 +54,53 @@ public class PointHistoryFragment extends Fragment {
         blueTextView = theView.findViewById(R.id.blueTeam);
         blueTextView.setText(AppData.game.getTeams().get(1));
 
+        setTextView = theView.findViewById(R.id.setTitle);
+        setTextView.setText("Set " + (AppData.selectedSet + 1));
+
         pointsHistoryAdapter = new PointsHistoryAdapter(getContext(), AppData.game.getSets().get(AppData.selectedSet).getPointHistory());
 
         listView.setAdapter(pointsHistoryAdapter);
+
+        updateRotations();
+    }
+
+
+    public void updateRotations(){
+        int red1 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(0);
+        redRotation1.setText(""+red1);
+        if (red1 < 0){redRotation1.setBackgroundColor(Color.RED);}
+        else if (red1 > 0){redRotation1.setBackgroundColor(Color.GREEN);}
+        else {redRotation1.setBackgroundColor(Color.WHITE);}
+
+        int red2 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(1);
+        redRotation2.setText(""+red2);
+        if (red2 < 0){redRotation2.setBackgroundColor(Color.RED);}
+        else if (red2 > 0){redRotation2.setBackgroundColor(Color.GREEN);}
+        else {redRotation2.setBackgroundColor(Color.WHITE);}
+
+        int red3 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(2);
+        redRotation3.setText(""+red3);
+        if (red3 < 0){redRotation3.setBackgroundColor(Color.RED);}
+        else if (red3 > 0){redRotation3.setBackgroundColor(Color.GREEN);}
+        else {redRotation3.setBackgroundColor(Color.WHITE);}
+
+        int red4 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(3);
+        redRotation4.setText(""+red4);
+        if (red4 < 0){redRotation4.setBackgroundColor(Color.RED);}
+        else if (red4 > 0){redRotation4.setBackgroundColor(Color.GREEN);}
+        else {redRotation4.setBackgroundColor(Color.WHITE);}
+
+        int red5 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(4);
+        redRotation5.setText(""+red5);
+        if (red5 < 0){redRotation5.setBackgroundColor(Color.RED);}
+        else if (red5 > 0){redRotation5.setBackgroundColor(Color.GREEN);}
+        else {redRotation5.setBackgroundColor(Color.WHITE);}
+
+        int red6 = AppData.game.getSets().get(AppData.selectedSet).getRedRotationPlusMinus().get(5);
+        redRotation6.setText(""+red6);
+        if (red6 < 0){redRotation6.setBackgroundColor(Color.RED);}
+        else if (red6 > 0){redRotation6.setBackgroundColor(Color.GREEN);}
+        else {redRotation6.setBackgroundColor(Color.WHITE);}
 
 
     }
