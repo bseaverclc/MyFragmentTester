@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PointHistoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+   <LinearLayout
+       android:id="@+id/titlelayout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:weightSum="100"
+       android:background="@drawable/border"
+
+       >
+    <TextView
+        android:id="@+id/redTeam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Red Team"
+        android:gravity="center"
+        android:layout_weight="30"
+        android:textStyle="bold"
+        />
+       <TextView
+           android:id="@+id/redRotateTitle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="R"
+           android:gravity="center"
+           android:layout_weight="10"
+           android:textStyle="bold"
+           android:background="@drawable/border"
+           />
+       <TextView
+           android:id="@+id/setTitle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Set #"
+           android:gravity="center"
+           android:layout_weight="20"
+           android:textStyle="bold"
+
+           />
+       <TextView
+           android:id="@+id/blueRotateTitle"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="R"
+           android:gravity="center"
+           android:layout_weight="10"
+           android:textStyle="bold"
+           android:background="@drawable/border"
+           />
+       <TextView
+           android:id="@+id/blueTeam"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="blue Team"
+           android:gravity="center"
+           android:layout_weight="30"
+           android:textStyle="bold"
+           />
+   </LinearLayout>
+
+
+
+
+    <ListView
+       android:id="@+id/pointlistview"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/titlelayout"
+
+        />
+
+</RelativeLayout>

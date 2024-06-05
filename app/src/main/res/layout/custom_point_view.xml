@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="100"
+
+
+        >
+
+        <TextView
+            android:id="@+id/redWhy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:text="Red Why"
+
+            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
+
+            android:textColor="#4d4d4d"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/redRotationNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="num"
+
+            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="25-25"
+            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
+
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/blueRotationNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="num"
+            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
+
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/blueWhy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:text="blue why"
+            android:textAppearance="?android:attr/textAppearanceSearchResultTitle"
+
+            android:gravity="center"
+            />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

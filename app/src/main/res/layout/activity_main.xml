@@ -10,23 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tab_layout">
-        
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello"
+            android:text="Scoreboard"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GameStats"
             />
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bye"
+            android:text="Point History"
             />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Run
-"
-            />
+
+
 
 
 

@@ -16,10 +16,10 @@ public class MyViewPageAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new HomeFragment();
-            case 1: return new ByeFragment();
-            case 2: return new runFragment();
-            default: return new HomeFragment();
+            case 0: return new ScoreboardFragment();
+            case 1: return new GameStatsFragment();
+            case 2: return new PointHistoryFragment();
+            default: return new PointHistoryFragment();
         }
     }
 

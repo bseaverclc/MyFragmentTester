@@ -45,6 +45,62 @@ public class Point {
                 '}';
     }
 
+    public String getServe() {
+        return serve;
+    }
+
+    public void setServe(String serve) {
+        this.serve = serve;
+    }
+
+    public int getRedRotation() {
+        return redRotation;
+    }
+
+    public void setRedRotation(int redRotation) {
+        this.redRotation = redRotation;
+    }
+
+    public int getBlueRotation() {
+        return blueRotation;
+    }
+
+    public void setBlueRotation(int blueRotation) {
+        this.blueRotation = blueRotation;
+    }
+
+    public String getWho() {
+        return who;
+    }
+
+    public void setWho(String who) {
+        this.who = who;
+    }
+
+    public String getWhy() {
+        return why;
+    }
+
+    public void setWhy(String why) {
+        this.why = why;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     // Getters and Setters (if needed)
 }
 

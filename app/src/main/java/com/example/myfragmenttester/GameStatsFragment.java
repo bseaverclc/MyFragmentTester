@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link runFragment#newInstance} factory method to
+ * Use the {@link GameStatsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class runFragment extends Fragment {
+public class GameStatsFragment extends Fragment {
 
 
 
@@ -21,6 +21,6 @@ public class runFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_run, container, false);
+        return inflater.inflate(R.layout.fragment_game_stats, container, false);
     }
 }

@@ -5,10 +5,13 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -17,17 +20,17 @@ import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ByeFragment#newInstance} factory method to
+ * Use the {@link ScoreboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ByeFragment extends Fragment implements View.OnClickListener {
+public class ScoreboardFragment extends Fragment implements View.OnClickListener {
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_bye, container, false);
+        View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         createButtons(v);
         createGame();
         updateScreen();
@@ -38,6 +41,8 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
 
 
 //
+
+    private EditText redTeamEditText, blueTeamEditText;
     private RadioButton set1,set2,set3,set4,set5;
 
     private Button redScoreButton;
@@ -73,7 +78,7 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
     private TextView blueEarnedPctView;
 
     private int rkill = 0;
-    private Game game;
+   // private Game game;
     private ArrayList<String> teams = new ArrayList<String>();
 
     private ASet set;
@@ -83,6 +88,47 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
 
 
     private void createButtons(View view){
+        redTeamEditText = view.findViewById(R.id.redTeamName);
+        blueTeamEditText = view.findViewById(R.id.blueTeamName);
+        redTeamEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println("text changed");
+                AppData.game.getTeams().set(0,s.toString());
+
+            }
+        });
+
+        blueTeamEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println("blue text changed");
+                AppData.game.getTeams().set(1,s.toString());
+
+            }
+        });
+
+
         set1 =  view.findViewById(R.id.set1);
         set1.setOnClickListener(this);
         set2 = view.findViewById(R.id.set2);
@@ -157,14 +203,17 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
 
     public void createGame(){
         System.out.println("new Game being created");
-        game = new Game(teams,new Date(), false);
-        game.getSets().add(new ASet());
-        game.getSets().add(new ASet());
-        game.getSets().add(new ASet());
-        game.getSets().add(new ASet());
-        game.getSets().add(new ASet());
-        set = game.getSets().get(0);
-        setNum = 1;
+        teams.add("Red Team");
+        teams.add("Blue Team");
+        AppData.game = new Game(teams,new Date(), false);
+        AppData.game.getSets().add(new ASet());
+        AppData.game.getSets().add(new ASet());
+        AppData.game.getSets().add(new ASet());
+        AppData.game.getSets().add(new ASet());
+        AppData.game.getSets().add(new ASet());
+        set = AppData.game.getSets().get(0);
+        AppData.selectedSet = 0;
+
 //        self.setSegmentedControlOutlet.selectedSegmentIndex = 0
 //        AppData.canEdit = true
 //        AppData.selectedGame = game
@@ -261,16 +310,52 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    public void redPointUpdate(){
+
+        int currentRedPlusRotation = set.getRedRotationPlusMinus().get(set.getRedRotation());
+        set.getRedRotationPlusMinus().set(set.getRedRotation(), currentRedPlusRotation + 1);
+        int currentBluePlusRotation = set.getBlueRotationPlusMinus().get(set.getBlueRotation());
+        set.getBlueRotationPlusMinus().set(set.getBlueRotation(), currentBluePlusRotation - 1);
+
+        if (!set.getServe().equals("red"))
+        {
+            set.setServe("red");
+            set.setRedRotation(set.getRedRotation()+1);
+            if (set.getRedRotation() == 6){
+            set.setRedRotation(0);
+            }
+        }
+    }
+
+    public void bluePointUpdate(){
+
+        int currentBlueRotation = set.getBlueRotationPlusMinus().get(set.getBlueRotation());
+        set.getBlueRotationPlusMinus().set(set.getBlueRotation(), currentBlueRotation + 1);
+        int currentRedRotation = set.getRedRotationPlusMinus().get(set.getRedRotation());
+        set.getRedRotationPlusMinus().set(set.getRedRotation(), currentRedRotation - 1);
+
+        if (!set.getServe().equals("blue"))
+        {
+            set.setServe("blue");
+            set.setBlueRotation(set.getBlueRotation()+1);
+            if (set.getBlueRotation() == 6){
+                set.setBlueRotation(0);
+            }
+        }
+    }
+
     public void redScoreAction(View view){
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
     public void redAceAction(View view){
         set.getRedStats().put("Ace", set.getRedStats().get("Ace") + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
 
     public void redBlockAction(View view){
@@ -280,7 +365,8 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.getRedStats().put("Opponent Attack Err", set.getRedStats().get("Opponent Attack Err") + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
     public void redKillAction(View view){
         // System.out.println("redkill");
@@ -288,7 +374,8 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.setRedAttack(set.getRedAttack() + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
 
     }
 
@@ -298,7 +385,8 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.setBlueAttack(set.getBlueAttack() + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opp Atk Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
 
     public void redOppServeErrAction(View view){
@@ -306,14 +394,16 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.getRedStats().put("Opponent Serve Err", set.getRedStats().get("Opponent Serve Err") + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opp Sv Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
     public void redOppOtherErrAction(View view){
         // System.out.println("redkill");
         set.getRedStats().put("Opponent Err", set.getRedStats().get("Opponent Err") + 1);
         set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
         Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opp Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        set.addPoint(point, AppData.game.getUid());
+        redPointUpdate();
     }
     public void redAtkAction(View view){
         set.setRedAttack(set.getRedAttack() + 1);
@@ -335,14 +425,16 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
     // Blue Actions
     public void blueScoreAction(View view){
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
     public void blueAceAction(View view){
         set.getBlueStats().put("Ace", set.getBlueStats().get("Ace") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Ace", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
 
     public void blueBlockAction(View view){
@@ -351,16 +443,18 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.setRedAttack(set.getRedAttack() + 1);
         set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Block", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
     public void blueKillAction(View view){
         // System.out.println("bluekill");
         set.getBlueStats().put("Kill", set.getBlueStats().get("Kill") + 1);
         set.setBlueAttack(set.getBlueAttack() + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Kill", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
 
     }
 
@@ -369,23 +463,26 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
         set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
         set.setRedAttack(set.getRedAttack() + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Atk Err", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Atk Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
 
     public void blueOppServeErrAction(View view){
         // System.out.println("bluekill");
         set.getBlueStats().put("Opponent Serve Err", set.getBlueStats().get("Opponent Serve Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Sv Err", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Sv Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
     public void blueOppOtherErrAction(View view){
         // System.out.println("bluekill");
         set.getBlueStats().put("Opponent Err", set.getBlueStats().get("Opponent Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Err", set.getBlueStats().get("blueScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, game.getUid());
+        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opp Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+        bluePointUpdate();
     }
     public void blueAtkAction(View view){
         set.setBlueAttack(set.getBlueAttack() + 1);
@@ -420,29 +517,29 @@ public class ByeFragment extends Fragment implements View.OnClickListener {
             set5.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
             if (id == R.id.set1){
                 set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
-                set = game.getSets().get(0);
-                setNum = 1;
+                set = AppData.game.getSets().get(0);
+                AppData.selectedSet = 0;
             }
             if (id == R.id.set2){
                 set2.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
-                set = game.getSets().get(1);
-                setNum = 2;
+                set = AppData.game.getSets().get(1);
+                AppData.selectedSet = 1;
             }
             if (id == R.id.set3){
                 set3.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
-                set = game.getSets().get(2);
-                setNum = 3;
+                set = AppData.game.getSets().get(2);
+                AppData.selectedSet = 2;
             }
             if (id == R.id.set4){
                 set4.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
-                set = game.getSets().get(3);
-                setNum = 4;
+                set = AppData.game.getSets().get(3);
+                AppData.selectedSet = 3;
 
             }
             if (id == R.id.set5){
                 set5.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
-                set = game.getSets().get(4);
-                setNum = 5;
+                set = AppData.game.getSets().get(4);
+                AppData.selectedSet = 4;
 
             }
         }
