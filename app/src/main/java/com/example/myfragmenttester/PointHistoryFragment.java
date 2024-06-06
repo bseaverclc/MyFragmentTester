@@ -34,6 +34,13 @@ public class PointHistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_point_history, container, false);
         theView = v;
+
+        listView = theView.findViewById(R.id.pointlistview);
+        redTextView = theView.findViewById(R.id.redTeam);
+        blueTextView = theView.findViewById(R.id.blueTeam);
+        setTextView = theView.findViewById(R.id.setTitle);
+
+
         redRotation1 = theView.findViewById(R.id.redRotation1);
         redRotation2 = theView.findViewById(R.id.redRotation2);
         redRotation3 = theView.findViewById(R.id.redRotation3);
@@ -48,18 +55,16 @@ public class PointHistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        listView = theView.findViewById(R.id.pointlistview);
-        redTextView = theView.findViewById(R.id.redTeam);
+
         redTextView.setText(AppData.game.getTeams().get(0));
-        blueTextView = theView.findViewById(R.id.blueTeam);
         blueTextView.setText(AppData.game.getTeams().get(1));
 
-        setTextView = theView.findViewById(R.id.setTitle);
+
         setTextView.setText("Set " + (AppData.selectedSet + 1));
 
         pointsHistoryAdapter = new PointsHistoryAdapter(getContext(), AppData.game.getSets().get(AppData.selectedSet).getPointHistory());
-
         listView.setAdapter(pointsHistoryAdapter);
+
 
         updateRotations();
     }

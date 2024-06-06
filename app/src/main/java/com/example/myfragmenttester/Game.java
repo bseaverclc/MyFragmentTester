@@ -14,7 +14,7 @@ public class Game {
         return date;
     }
 
-    public List<ASet> getSets() {
+    public ArrayList<ASet> getSets() {
         return sets;
     }
 
@@ -40,7 +40,7 @@ public class Game {
 
     private List<Integer> setWins = Arrays.asList(0, 0);
     private Date date;
-    private List<ASet> sets;
+    private ArrayList<ASet> sets;
     private String uid = "";
     private boolean publicGame = true;
     private int intDate;
