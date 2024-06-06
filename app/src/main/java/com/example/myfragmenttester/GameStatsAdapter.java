@@ -18,6 +18,8 @@ public class GameStatsAdapter extends ArrayAdapter<ASet> {
     private TextView redPoints, bluePoints;
     private TextView redKills, blueKills;
     private TextView redBlocks, blueBlocks;
+    private TextView redAces, blueAces;
+    private TextView redErrors, blueErrors;
 
     public GameStatsAdapter(@NonNull Context context, ArrayList<ASet> sets) {
         super(context, R.layout.custom_gamestats_view, sets);
@@ -50,6 +52,23 @@ public class GameStatsAdapter extends ArrayAdapter<ASet> {
             redBlocks.setText("" + theSets.get(position).getRedStats().get("Block"));
             blueBlocks = rowView.findViewById(R.id.gameStatsBlueBlocks);
             blueBlocks.setText("" + theSets.get(position).getBlueStats().get("Block"));
+
+            redAces = rowView.findViewById(R.id.gameStatsRedAces);
+            redAces.setText("" + theSets.get(position).getRedStats().get("Ace"));
+            blueAces = rowView.findViewById(R.id.gameStatsBlueAces);
+            blueAces.setText("" + theSets.get(position).getBlueStats().get("Ace"));
+
+        redErrors = rowView.findViewById(R.id.gameStatsRedErrors);
+        int redErrs = theSets.get(position).getBlueStats().get("Opponent Attack Err") - theSets.get(position).getBlueStats().get("Block");
+        redErrs += theSets.get(position).getBlueStats().get("Opponent Serve Err") + theSets.get(position).getBlueStats().get("Opponent Err");
+        redErrors.setText("" + redErrs );
+
+        blueErrors = rowView.findViewById(R.id.gameStatsBlueErrors);
+        int blueErrs = theSets.get(position).getRedStats().get("Opponent Attack Err") - theSets.get(position).getRedStats().get("Block");
+        blueErrs += theSets.get(position).getRedStats().get("Opponent Serve Err") + theSets.get(position).getRedStats().get("Opponent Err");
+        blueErrors.setText("" + blueErrs );
+
+
 
 
 
