@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PointHistoryFragment">
+    tools:context=".PointHistoryFragment"
+    android:windowSoftInputMode="adjustNothing"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -11,16 +13,19 @@
         android:layout_height="match_parent"
         android:weightSum="100"
         android:orientation="vertical"
+
         >
+
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="7"
+            android:layout_weight="8"
             android:weightSum="100"
-
             >
+
+
 
             <!--
                         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -160,7 +165,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="10"
                     android:weightSum="100"
                     >
 
@@ -179,6 +184,7 @@
 
                     <EditText
                         android:id="@+id/redTeamName"
+                        android:inputType="text"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="60"
@@ -186,6 +192,7 @@
                         android:layout_marginHorizontal="5dp"
                         android:textAlignment="center"
                         android:background="@color/white"
+                        android:imeOptions="actionDone"
                         />
 
                     <Button
@@ -451,7 +458,7 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:weightSum="100"
-                    android:layout_weight="12"
+                    android:layout_weight="20"
                     android:gravity="center"
                     >
 
@@ -461,9 +468,10 @@
                     <Button
                         android:id="@+id/redOne"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="1SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -473,9 +481,10 @@
                     <Button
                         android:id="@+id/redTwo"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="2SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -484,9 +493,10 @@
                     <Button
                         android:id="@+id/redThree"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="3SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -511,7 +521,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="10"
                     android:weightSum="100"
                     >
 
@@ -530,6 +540,7 @@
 
                     <EditText
                         android:id="@+id/blueTeamName"
+                        android:inputType="text"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="60"
@@ -537,6 +548,7 @@
                         android:layout_marginHorizontal="5dp"
                         android:textAlignment="center"
                         android:background="@color/white"
+                       android:imeOptions="actionDone"
                         />
 
                     <Button
@@ -547,7 +559,7 @@
                         android:text="Starting\nRotation\n1
 "
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/red"
+                        android:backgroundTint="@color/blue"
 
                         android:maxLines="3"
                         android:padding="1dp"
@@ -798,7 +810,7 @@
                     android:layout_height="0dp"
                     android:orientation="horizontal"
                     android:weightSum="100"
-                    android:layout_weight="12"
+                    android:layout_weight="20"
                     android:gravity="center"
                     >
 
@@ -808,9 +820,10 @@
                     <Button
                         android:id="@+id/blueOne"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="1SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -822,9 +835,10 @@
                     <Button
                         android:id="@+id/blueTwo"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="2SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -833,9 +847,10 @@
                     <Button
                         android:id="@+id/blueThree"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="33"
-                        android:layout_margin="5dp"
+                        android:layout_marginVertical="15dp"
+                        android:layout_marginHorizontal="5dp"
                         android:text="3SR\n0"
                         android:padding="2dp"
                         android:textColor="@color/black"
@@ -855,7 +870,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="12"
             android:orientation="horizontal"
             android:weightSum="100"
             android:gravity="center"
@@ -865,9 +880,9 @@
                 android:id="@+id/undoPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="25"
+                android:layout_weight="50"
                 android:layout_margin="5dp"
-                android:text="Undo\nPoint"
+                android:text="Undo Last\nPoint"
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
                 />
@@ -875,35 +890,15 @@
                 android:id="@+id/switchSides"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="25"
+                android:layout_weight="50"
                 android:layout_margin="5dp"
                 android:text="Switch\nSides
 "
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
                 />
-            <Button
-                android:id="@+id/gameStats"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:layout_margin="5dp"
-                android:text="Game\nStats"
-                android:backgroundTint="@color/gray"
-                android:textColor="@color/black"
-                />
-            <Button
-                android:id="@+id/pointHistory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:layout_margin="5dp"
-                android:text="Point\nHistory"
-                android:maxLines="2"
-                android:padding="5dp"
-                android:backgroundTint="@color/gray"
-                android:textColor="@color/black"
-                />
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

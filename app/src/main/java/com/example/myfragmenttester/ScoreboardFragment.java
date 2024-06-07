@@ -215,6 +215,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         AppData.game.getSets().add(new ASet());
         AppData.game.getSets().add(new ASet());
         set = AppData.game.getSets().get(0);
+        set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
         AppData.selectedSet = 0;
 
 //        self.setSegmentedControlOutlet.selectedSegmentIndex = 0

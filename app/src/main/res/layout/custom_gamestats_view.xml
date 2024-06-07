@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/gameStatsAllRows">
 
     <LinearLayout
         android:id="@+id/gameStatsTitleRow"
@@ -244,6 +245,328 @@
             />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsServiceErrorRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsErrorRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedServiceErrors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsServiceErrorTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Service Errors
+"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueServiceErrors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsAttackErrorRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsServiceErrorRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedAttackErrors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsAttackErrorTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Attack Errors"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueAttackErrors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsAttackRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsAttackErrorRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedAttacks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsAttackTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Attacks"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueAttacks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsHittingRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsAttackRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedHit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsHitTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Hitting %"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueHit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsPassingRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsHittingRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedPass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsPassingTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Passing AVG"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBluePass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsSideOutRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsPassingRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedSideout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsSideOutTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Sidout %"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueSideout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsDigRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsSideOutRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedDigs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsDigsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Digs"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBlueDigs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gameStatsPctEarnedRow"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:layout_below="@+id/gameStatsDigRow"
+        >
+
+        <TextView
+            android:id="@+id/gameStatsRedPctEarned"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/gameStatsPctEarnedTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="Earned %"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/gameStatsBluePctEarned"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="33"
+            android:text="0"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+    </LinearLayout>
+
 
 
 </RelativeLayout>
