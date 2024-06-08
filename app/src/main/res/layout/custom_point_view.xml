@@ -19,6 +19,8 @@
             android:layout_weight="30"
             android:text="Red Why"
             android:gravity="center"
+            android:maxLines="1"
+            android:autoSizeTextType="uniform"
             />
 
         <TextView
@@ -52,6 +54,8 @@
             android:layout_weight="30"
             android:text="blue why"
             android:gravity="center"
+            android:maxLines="1"
+            android:autoSizeTextType="uniform"
             />
 
 
