@@ -433,14 +433,14 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     // Blue Actions
     public void blueScoreAction(View view){
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
     public void blueAceAction(View view){
         set.getBlueStats().put("Ace", set.getBlueStats().get("Ace") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
@@ -451,7 +451,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         set.setRedAttack(set.getRedAttack() + 1);
         set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
@@ -460,7 +460,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         set.getBlueStats().put("Kill", set.getBlueStats().get("Kill") + 1);
         set.setBlueAttack(set.getBlueAttack() + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
 
@@ -471,7 +471,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
         set.setRedAttack(set.getRedAttack() + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opponent Attack Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Attack Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
@@ -480,7 +480,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         // System.out.println("bluekill");
         set.getBlueStats().put("Opponent Serve Err", set.getBlueStats().get("Opponent Serve Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opponent Serve Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Serve Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
@@ -488,7 +488,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         // System.out.println("bluekill");
         set.getBlueStats().put("Opponent Err", set.getBlueStats().get("Opponent Err") + 1);
         set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getBlueRotation(), set.getBlueRotation(), "blue", "Opponent Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
         set.addPoint(point, AppData.game.getUid());
         bluePointUpdate();
     }
