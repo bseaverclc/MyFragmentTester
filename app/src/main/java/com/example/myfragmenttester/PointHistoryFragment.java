@@ -25,6 +25,7 @@ public class PointHistoryFragment extends Fragment {
 
  private TextView redTextView, blueTextView, setTextView;
  private TextView redRotation1, redRotation2, redRotation3, redRotation4, redRotation5,redRotation6;
+    private TextView blueRotation1, blueRotation2, blueRotation3, blueRotation4, blueRotation5,blueRotation6;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +48,13 @@ public class PointHistoryFragment extends Fragment {
         redRotation4 = theView.findViewById(R.id.redRotation4);
         redRotation5 = theView.findViewById(R.id.redRotation5);
         redRotation6 = theView.findViewById(R.id.redRotation6);
+
+        blueRotation1 = theView.findViewById(R.id.blueRotation1);
+        blueRotation2 = theView.findViewById(R.id.blueRotation2);
+        blueRotation3 = theView.findViewById(R.id.blueRotation3);
+        blueRotation4 = theView.findViewById(R.id.blueRotation4);
+        blueRotation5 = theView.findViewById(R.id.blueRotation5);
+        blueRotation6 = theView.findViewById(R.id.blueRotation6);
         return v;
 
 
@@ -106,6 +114,43 @@ public class PointHistoryFragment extends Fragment {
         if (red6 < 0){redRotation6.setBackgroundColor(Color.RED);}
         else if (red6 > 0){redRotation6.setBackgroundColor(Color.GREEN);}
         else {redRotation6.setBackgroundColor(Color.WHITE);}
+
+
+        int blue1 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(0);
+        blueRotation1.setText(""+blue1);
+        if (blue1 < 0){blueRotation1.setBackgroundColor(Color.RED);}
+        else if (blue1 > 0){blueRotation1.setBackgroundColor(Color.GREEN);}
+        else {blueRotation1.setBackgroundColor(Color.WHITE);}
+
+        int blue2 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(1);
+        blueRotation2.setText(""+blue2);
+        if (blue2 < 0){blueRotation2.setBackgroundColor(Color.RED);}
+        else if (blue2 > 0){blueRotation2.setBackgroundColor(Color.GREEN);}
+        else {blueRotation2.setBackgroundColor(Color.WHITE);}
+
+        int blue3 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(2);
+        blueRotation3.setText(""+blue3);
+        if (blue3 < 0){blueRotation3.setBackgroundColor(Color.RED);}
+        else if (blue3 > 0){blueRotation3.setBackgroundColor(Color.GREEN);}
+        else {blueRotation3.setBackgroundColor(Color.WHITE);}
+
+        int blue4 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(3);
+        blueRotation4.setText(""+blue4);
+        if (blue4 < 0){blueRotation4.setBackgroundColor(Color.RED);}
+        else if (blue4 > 0){blueRotation4.setBackgroundColor(Color.GREEN);}
+        else {blueRotation4.setBackgroundColor(Color.WHITE);}
+
+        int blue5 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(4);
+        blueRotation5.setText(""+blue5);
+        if (blue5 < 0){blueRotation5.setBackgroundColor(Color.RED);}
+        else if (blue5 > 0){blueRotation5.setBackgroundColor(Color.GREEN);}
+        else {blueRotation5.setBackgroundColor(Color.WHITE);}
+
+        int blue6 = AppData.game.getSets().get(AppData.selectedSet).getBlueRotationPlusMinus().get(5);
+        blueRotation6.setText(""+blue6);
+        if (blue6 < 0){blueRotation6.setBackgroundColor(Color.RED);}
+        else if (blue6 > 0){blueRotation6.setBackgroundColor(Color.GREEN);}
+        else {blueRotation6.setBackgroundColor(Color.WHITE);}
 
 
     }
