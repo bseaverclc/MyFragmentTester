@@ -144,6 +144,7 @@
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/statsHorizontalLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:weightSum="100"
@@ -155,6 +156,7 @@
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/redStatsLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -511,6 +513,7 @@
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/blueStatsLayout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"

@@ -2,6 +2,7 @@ package com.example.myfragmenttester;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -43,11 +45,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
 
 //
-
+private int layout = 0;
+    private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout;
     private EditText redTeamEditText, blueTeamEditText;
     private RadioButton set1,set2,set3,set4,set5;
 
-    private Button undoButton;
+    private Button undoButton, switchSides;
 
     private Button redScoreButton;
     private Button redAceButton;
@@ -132,8 +135,17 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     private void createButtons(View view){
+        statsHorizontalLayout = view.findViewById(R.id.statsHorizontalLayout);
+       redStatsLayout = view.findViewById(R.id.redStatsLayout);
+       blueStatsLayout = view.findViewById(R.id.blueStatsLayout);
+
         undoButton = view.findViewById(R.id.undoPoint);
         undoButton.setOnClickListener(this);
+
+        switchSides = view.findViewById(R.id.switchSides);
+        switchSides.setOnClickListener(this);
+
+
 
 
         set1 =  view.findViewById(R.id.set1);
@@ -633,6 +645,22 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         if (id == R.id.undoPoint) {
             System.out.println("undo button pushed");
             undoAction();
+        }
+
+        if(id == R.id.switchSides){
+            if (layout == 0) {
+                statsHorizontalLayout.removeAllViews();
+                statsHorizontalLayout.addView(blueStatsLayout);
+                statsHorizontalLayout.addView(redStatsLayout);
+                layout = 1;
+            }
+            else{
+                statsHorizontalLayout.removeAllViews();
+                statsHorizontalLayout.addView(redStatsLayout);
+                statsHorizontalLayout.addView(blueStatsLayout);
+                layout = 0;
+            }
+
         }
 
 
