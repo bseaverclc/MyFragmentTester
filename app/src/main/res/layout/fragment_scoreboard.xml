@@ -883,9 +883,10 @@
                 android:id="@+id/undoPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="25"
                 android:layout_margin="5dp"
-                android:text="Undo Last\nPoint"
+                android:text="Undo\nLast Point"
+                android:paddingHorizontal="1dp"
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
                 />
@@ -893,9 +894,32 @@
                 android:id="@+id/switchSides"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="25"
                 android:layout_margin="5dp"
                 android:text="Switch\nSides
+"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+            <Button
+                android:id="@+id/publicGames"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="Public\nGames
+"
+                android:backgroundTint="@color/gray"
+                android:textColor="@color/black"
+                />
+
+            <Button
+                android:id="@+id/myGames"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:layout_margin="5dp"
+                android:text="My\nGames
 "
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"

@@ -1,7 +1,10 @@
 package com.example.myfragmenttester;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -17,7 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -39,18 +49,22 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         createGame();
         updateScreen();
         setNum = 1;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        readGamesFromFirebase();
         return v;
     }
 
 
 
 //
-private int layout = 0;
+    private DatabaseReference mDatabase;
+    private int layout = 0;
     private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout;
     private EditText redTeamEditText, blueTeamEditText;
     private RadioButton set1,set2,set3,set4,set5;
 
     private Button undoButton, switchSides;
+    private Button publicGames;
 
     private Button redScoreButton;
     private Button redAceButton;
@@ -90,6 +104,38 @@ private int layout = 0;
 
     private ASet set;
     private int setNum = 0;
+
+    private void readGamesFromFirebase(){
+        mDatabase.child("games").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String key = snapshot.getKey();
+                System.out.println(key);
+                Game aGame = new Game(key, (Map<String, Object>) snapshot.getValue());
+                AppData.publicGames.add(aGame);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
     private void createEditTexts(View view){
@@ -144,6 +190,9 @@ private int layout = 0;
 
         switchSides = view.findViewById(R.id.switchSides);
         switchSides.setOnClickListener(this);
+
+        publicGames = view.findViewById(R.id.publicGames);
+        publicGames.setOnClickListener(this);
 
 
 
@@ -648,6 +697,7 @@ private int layout = 0;
         }
 
         if(id == R.id.switchSides){
+
             if (layout == 0) {
                 statsHorizontalLayout.removeAllViews();
                 statsHorizontalLayout.addView(blueStatsLayout);
@@ -661,6 +711,15 @@ private int layout = 0;
                 layout = 0;
             }
 
+        }
+
+        if(id == R.id.publicGames){
+            System.out.println("public games pushed");
+            AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+            Collections.reverse(AppData.publicGames);
+            Intent intent = new Intent(getContext(), PublicGames.class);
+            //intent.putExtra("meet", meet);
+            startActivity(intent);
         }
 
 

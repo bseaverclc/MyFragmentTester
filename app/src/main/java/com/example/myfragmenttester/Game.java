@@ -1,9 +1,10 @@
 package com.example.myfragmenttester;
 
+import java.io.Serializable;
 import java.util.*;
 import java.text.*;
 
-public class Game {
+public class Game implements Serializable {
     private List<String> teams = new ArrayList<>();
 
     public List<Integer> getSetWins() {
@@ -46,23 +47,16 @@ public class Game {
     private int intDate;
     private Integer type;
 
-    public Game(List<String> teams, Date date, boolean publicGame) {
-        this.teams = teams;
-        this.date = date;
-        this.sets = new ArrayList<>();
-        this.publicGame = publicGame;
-
-        // convert Date to TimeInterval (typealias for Double)
-        long timeInterval = this.date.getTime();
-
-        // convert to Integer
-        this.intDate = (int) (timeInterval / 1000);
-        // uid = "";
+    public Game(){
+        System.out.println("default constructor being called");
     }
 
+
+
     public Game(String key, Map<String, Object> dict) {
+        System.out.println("Key constructor being called");
         if (dict.containsKey("type")) {
-            this.type = (Integer) dict.get("type");
+            this.type = Math.toIntExact((Long)dict.get("type"));
         } else {
             this.type = 0;
         }
@@ -70,7 +64,7 @@ public class Game {
         this.setWins = (List<Integer>) dict.get("setWins");
 
         if (dict.containsKey("intDate")) {
-            this.intDate = (Integer) dict.get("intDate");
+            this.intDate = Math.toIntExact((Long)dict.get("intDate"));
             this.date = new Date((long) this.intDate * 1000);
         } else {
             DateFormat formatter1 = new SimpleDateFormat("MM/dd/yy HH:mm aa");
@@ -99,6 +93,22 @@ public class Game {
 
         this.sets = new ArrayList<>();
         this.uid = key;
+    }
+
+    public Game(List<String> teams, Date date, boolean publicGame) {
+        System.out.println("List Constructor being called");
+        this.teams = teams;
+
+        this.date = date;
+        this.sets = new ArrayList<>();
+        this.publicGame = publicGame;
+
+        // convert Date to TimeInterval (typealias for Double)
+        long timeInterval = this.date.getTime();
+
+        // convert to Integer
+        this.intDate = (int) (timeInterval / 1000);
+        // uid = "";
     }
 
     public void updateGame(Map<String, Object> dict) {
