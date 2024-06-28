@@ -13,13 +13,19 @@
         android:theme="@style/Theme.MyFragmentTester"
         tools:targetApi="31">
         <activity
+            android:name=".Settings"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".PublicGames"
             android:launchMode="singleTask"
-            android:parentActivityName="com.example.myfragmenttester.MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

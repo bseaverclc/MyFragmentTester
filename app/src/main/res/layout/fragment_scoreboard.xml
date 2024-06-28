@@ -47,7 +47,7 @@
             <RadioGroup
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="60"
+                android:layout_weight="100"
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:foregroundTint="@color/black"
@@ -116,29 +116,9 @@
             <!--
                         </com.google.android.material.button.MaterialButtonToggleGroup>
             -->
-            <Button
-                android:id="@+id/newGame"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:backgroundTint="@color/red"
-                android:text="New\nGame"
-                android:padding="3dp"
-                android:maxLines="2"
-                android:textColor="@color/black"
-                />
 
-            <Button
-                android:id="@+id/saveGame"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:backgroundTint="@color/blue"
-                android:text="Save\nGame"
-                android:padding="3dp"
-                android:maxLines="2"
-                android:textColor="@color/black"
-                />
+
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -171,47 +151,24 @@
                     android:weightSum="100"
                     >
 
-                    <Button
-                        android:id="@+id/redColor"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:text="C"
-                        android:textColor="@color/black"
-                        android:backgroundTint="@color/red"
-                        android:autoSizeTextType="uniform"
-                        android:maxLines="1"
-                        android:padding="1dp"
-                        />
+
 
                     <EditText
                         android:id="@+id/redTeamName"
                         android:inputType="text"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="60"
+                        android:layout_weight="100"
                         android:hint="Team Name"
                         android:layout_marginHorizontal="5dp"
                         android:textAlignment="center"
                         android:background="@color/white"
                         android:imeOptions="actionDone"
-                        />
-
-                    <Button
-                        android:id="@+id/redRotation"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:text="Starting\nRotation\n1
-"
-                        android:textColor="@color/black"
-                        android:backgroundTint="@color/red"
-
-                        android:maxLines="3"
-                        android:padding="1dp"
-                        android:textSize="6dp"
+                        android:layout_margin="5dp"
 
                         />
+
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -275,6 +232,7 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/redScorePanel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -293,7 +251,7 @@
                             android:gravity="left"
                             android:text="Hit %"
                             android:layout_weight="10"
-                            android:background="@color/red"
+
                             android:textColor="@color/black"
 
                             />
@@ -305,7 +263,7 @@
                             android:gravity="left"
                             android:text="Passing Avg"
                             android:layout_weight="10"
-                            android:background="@color/red"
+
                             android:textColor="@color/black"
                             />
 
@@ -317,7 +275,7 @@
                             android:gravity="left"
                             android:text="Earned %"
                             android:layout_weight="10"
-                            android:background="@color/red"
+
                             android:textColor="@color/black"
                             />
                         <Button
@@ -528,47 +486,24 @@
                     android:weightSum="100"
                     >
 
-                    <Button
-                        android:id="@+id/blueColor"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:text="C"
-                        android:textColor="@color/black"
-                        android:backgroundTint="@color/blue"
-                        android:autoSizeTextType="uniform"
-                        android:maxLines="1"
-                        android:padding="1dp"
-                        />
+
 
                     <EditText
                         android:id="@+id/blueTeamName"
                         android:inputType="text"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="60"
+                        android:layout_weight="100"
                         android:hint="Team Name"
                         android:layout_marginHorizontal="5dp"
                         android:textAlignment="center"
                         android:background="@color/white"
                        android:imeOptions="actionDone"
-                        />
-
-                    <Button
-                        android:id="@+id/blueRotation"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:text="Starting\nRotation\n1
-"
-                        android:textColor="@color/black"
-                        android:backgroundTint="@color/blue"
-
-                        android:maxLines="3"
-                        android:padding="1dp"
-                        android:textSize="6dp"
+                        android:layout_margin="5dp"
 
                         />
+
+
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -581,6 +516,7 @@
 
                     >
                     <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/blueScorePanel"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -598,7 +534,6 @@
                             android:gravity="left"
                             android:text="Hit %"
                             android:layout_weight="10"
-                            android:background="@color/blue"
                             android:textColor="@color/black"
 
                             />
@@ -610,7 +545,6 @@
                             android:gravity="left"
                             android:text="Passing Avg"
                             android:layout_weight="10"
-                            android:background="@color/blue"
                             android:textColor="@color/black"
                             />
 
@@ -622,7 +556,6 @@
                             android:gravity="left"
                             android:text="Earned %"
                             android:layout_weight="10"
-                            android:background="@color/blue"
                             android:textColor="@color/black"
                             />
                         <Button
@@ -883,7 +816,7 @@
                 android:id="@+id/undoPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="25"
+                android:layout_weight="50"
                 android:layout_margin="5dp"
                 android:text="Undo\nLast Point"
                 android:paddingHorizontal="1dp"
@@ -894,36 +827,16 @@
                 android:id="@+id/switchSides"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="25"
+                android:layout_weight="50"
                 android:layout_margin="5dp"
                 android:text="Switch\nSides
 "
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
                 />
-            <Button
-                android:id="@+id/publicGames"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:layout_margin="5dp"
-                android:text="Public\nGames
-"
-                android:backgroundTint="@color/gray"
-                android:textColor="@color/black"
-                />
 
-            <Button
-                android:id="@+id/myGames"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="25"
-                android:layout_margin="5dp"
-                android:text="My\nGames
-"
-                android:backgroundTint="@color/gray"
-                android:textColor="@color/black"
-                />
+
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

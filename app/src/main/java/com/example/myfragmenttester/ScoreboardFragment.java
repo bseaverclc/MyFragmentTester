@@ -50,16 +50,41 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         updateScreen();
         setNum = 1;
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        System.out.println("database reference : " + mDatabase);
         readGamesFromFirebase();
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateBackgroundColors();
+    }
 
+    public void updateBackgroundColors(){
+        redAceButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redKillButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redBlockButton.setBackgroundColor((AppData.gameRedTeamColor));
+        redOppAtkErrButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redOppOtherErrButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redOppServeErrButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redScoreButton.setBackgroundColor(AppData.gameRedTeamColor);
+        redScorePanel.setBackgroundColor(AppData.gameRedTeamColor);
 
-//
+         blueAceButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueKillButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueBlockButton.setBackgroundColor((AppData.gameBlueTeamColor));
+         blueOppAtkErrButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueOppOtherErrButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueOppServeErrButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueScoreButton.setBackgroundColor(AppData.gameBlueTeamColor);
+         blueScorePanel.setBackgroundColor(AppData.gameBlueTeamColor);
+    }
+
+    //
     private DatabaseReference mDatabase;
     private int layout = 0;
-    private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout;
+    private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout, redScorePanel, blueScorePanel;
     private EditText redTeamEditText, blueTeamEditText;
     private RadioButton set1,set2,set3,set4,set5;
 
@@ -106,7 +131,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private int setNum = 0;
 
     private void readGamesFromFirebase(){
+        System.out.println("In Read Games from firebase");
         mDatabase.child("games").addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String key = snapshot.getKey();
@@ -181,6 +208,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     private void createButtons(View view){
+        redScorePanel= view.findViewById(R.id.redScorePanel);
+        blueScorePanel = view.findViewById(R.id.blueScorePanel);
         statsHorizontalLayout = view.findViewById(R.id.statsHorizontalLayout);
        redStatsLayout = view.findViewById(R.id.redStatsLayout);
        blueStatsLayout = view.findViewById(R.id.blueStatsLayout);
@@ -191,8 +220,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         switchSides = view.findViewById(R.id.switchSides);
         switchSides.setOnClickListener(this);
 
-        publicGames = view.findViewById(R.id.publicGames);
-        publicGames.setOnClickListener(this);
+
 
 
 

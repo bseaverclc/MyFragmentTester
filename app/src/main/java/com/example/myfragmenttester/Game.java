@@ -39,13 +39,15 @@ public class Game implements Serializable {
         return teams;
     }
 
+    public void setType(int newType){type = newType;}
+
     private List<Integer> setWins = Arrays.asList(0, 0);
     private Date date;
     private ArrayList<ASet> sets;
     private String uid = "";
     private boolean publicGame = true;
     private int intDate;
-    private Integer type;
+    private Integer type = 0;
 
     public Game(){
         System.out.println("default constructor being called");

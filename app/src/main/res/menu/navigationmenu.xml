@@ -4,12 +4,22 @@
     tools:ignore="HardcodedText">
 
     <item
+        android:id="@+id/settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/newGame"
+        android:title="Create New Game" />
+    <item
+        android:id="@+id/saveGame"
+        android:title="Save Current Game" />
+    <item
         android:id="@+id/publicGames"
-        android:title="Public Games" />
+        android:title="View Public Games" />
 
     <item
         android:id="@+id/myGames"
-        android:title="My Games" />
+        android:title="View My Games" />
+
 
 
 </menu>

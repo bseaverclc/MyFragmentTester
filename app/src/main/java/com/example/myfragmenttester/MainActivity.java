@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements
 //        }
 
         drawerLayout = findViewById(R.id.my_drawer_layout);
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigationView);
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Easy Volleyball Scoreboard");
 
 
         tabLayout = findViewById(R.id.tab_layout);
@@ -112,7 +114,15 @@ public class MainActivity extends AppCompatActivity implements
             //intent.putExtra("meet", meet);
             startActivity(intent);
            drawerLayout.closeDrawers();
+        }
+        if (id == R.id.settings) {
+            // DO your stuff
+            System.out.println("settings clicked");
 
+            Intent intent = new Intent(this, Settings.class);
+            //intent.putExtra("meet", meet);
+            startActivity(intent);
+            drawerLayout.closeDrawers();
         }
         return true;
     }

@@ -14,6 +14,7 @@ public class PublicGames extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public_games);
+        System.out.println(AppData.publicGames.size());
 
         Intent intent = getIntent();
         //selectedEvent = (String)intent.getSerializableExtra("Selected");

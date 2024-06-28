@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Visibility"
+                android:layout_weight="50"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:id="@+id/publicPrivateGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal"
+                android:foregroundTint="@color/black"
+                android:layout_margin="10dp"
+
+                >
+
+            <RadioButton
+                android:id="@+id/publicButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Public"
+                android:gravity="center"
+                android:padding="1dp"
+
+
+
+                />
+            <RadioButton
+                android:id="@+id/privateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Private"
+                android:gravity="center"
+
+                />
+            </RadioGroup>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Stats Mode"
+                android:layout_weight="50"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:id="@+id/statsModeGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:orientation="horizontal"
+                android:foregroundTint="@color/black"
+                android:layout_margin="10dp"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/simpleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simple"
+                    android:gravity="center"
+                    android:padding="1dp"
+
+
+
+                    />
+                <RadioButton
+                    android:id="@+id/advancedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Advanced"
+                    android:gravity="center"
+
+                    />
+            </RadioGroup>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        >
+        <TextView
+            android:id="@+id/redTeamColorText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Red Team Color"
+            android:layout_weight="50"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_vertical"/>
+
+        <com.google.android.material.button.MaterialButton
+
+            android:id="@+id/redTeamColor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="50"
+            android:text="Edit Color"
+            app:strokeColor="@color/black"
+            app:backgroundTint="@color/red"
+            app:strokeWidth="3dp"
+            android:textColor="@color/black"
+
+            />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            >
+            <TextView
+                android:id="@+id/blueTeamColorText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Blue Team Color"
+                android:layout_weight="50"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <com.google.android.material.button.MaterialButton
+
+                android:id="@+id/blueTeamColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:text="Edit Color"
+                app:strokeColor="@color/black"
+                app:backgroundTint="@color/blue"
+                app:strokeWidth="3dp"
+                android:textColor="@color/black"
+
+                />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
