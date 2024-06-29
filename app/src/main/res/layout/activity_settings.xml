@@ -167,6 +167,188 @@
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Settings for each set"
+            android:gravity="center"
+            />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="100"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:foregroundTint="@color/black"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/set1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 1"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 2"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 3"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 4"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/set5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="set 5"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+
+
+            </RadioGroup>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:text="Red Starting Rotation"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"/>
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:foregroundTint="@color/black"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/redRot1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/redRot2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/redRot3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/redRot4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/redRot5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/redRot6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+
+
+            </RadioGroup>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
