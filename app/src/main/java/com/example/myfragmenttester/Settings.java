@@ -20,6 +20,9 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private RadioButton publicButton, privateButton, simpleButton, advancedButton;
 
     private RadioButton set1,set2,set3,set4,set5;
+
+    private RadioButton blueRot1, blueRot2, blueRot3,blueRot4,blueRot5, blueRot6;
+
     private RadioButton redRot1, redRot2, redRot3,redRot4,redRot5, redRot6;
     int chosenSet = 0;
 
@@ -132,9 +135,22 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         redRot6 = findViewById(R.id.redRot6);
         redRot6.setOnClickListener(this);
 
+        blueRot1 =  findViewById(R.id.blueRot1);
+        blueRot1.setOnClickListener(this);
+        blueRot2 = findViewById(R.id.blueRot2);
+        blueRot2.setOnClickListener(this);
+        blueRot3 = findViewById(R.id.blueRot3);
+        blueRot3.setOnClickListener(this);
+        blueRot4 = findViewById(R.id.blueRot4);
+        blueRot4.setOnClickListener(this);
+        blueRot5 = findViewById(R.id.blueRot5);
+        blueRot5.setOnClickListener(this);
+        blueRot6 = findViewById(R.id.blueRot6);
+        blueRot6.setOnClickListener(this);
+
         choseSet();
         highlightRedRotation();
-
+        highlightBlueRotation();
 
 
 
@@ -197,6 +213,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             }
             choseSet();
             highlightRedRotation();
+            highlightBlueRotation();
         }
 
         // clicked on a red rotation
@@ -233,6 +250,41 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             }
 
         }
+
+        // clicked on a blue rotation
+        if(id == R.id.blueRot1 || id == R.id.blueRot2 || id == R.id.blueRot3 || id == R.id.blueRot4 || id == R.id.blueRot5|| id == R.id.blueRot6) {
+            blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+            if (id == R.id.blueRot1){
+                blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(0);
+            }
+            if (id == R.id.blueRot2){
+                blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(1);
+            }
+            if (id == R.id.blueRot3){
+                blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(2);
+            }
+            if (id == R.id.blueRot4){
+                blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(3);
+            }
+            if (id == R.id.blueRot5){
+                blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(4);
+            }
+            if (id == R.id.blueRot6){
+                blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                blueRotationChange(5);
+            }
+
+        }
     }
 
     private void redRotationChange(int start){
@@ -266,6 +318,37 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             }
         }
 
+    private void blueRotationChange(int start){
+        ASet theSet = AppData.game.getSets().get(chosenSet);
+        if (theSet.getPointHistory().size() == 0){
+            theSet.setBlueRotation(start);
+        }
+        else {
+            for (int i = 0; i < theSet.getBlueRotationPlusMinus().size(); i++) {
+                theSet.getBlueRotationPlusMinus().set(i, 0);
+            }
+            int diff = start - theSet.getPointHistory().get(0).getBlueRotation();
+            for (Point p : theSet.getPointHistory()) {
+                int newBlue = p.getBlueRotation() + diff;
+                if (newBlue < 0) {
+                    newBlue = 6 + newBlue;
+                }
+                p.setBlueRotation(newBlue % 6);
+                int currentBlue = theSet.getBlueRotationPlusMinus().get(p.getBlueRotation());
+                if (p.getWho().equals("blue")) {
+                    theSet.getBlueRotationPlusMinus().set(p.getBlueRotation(), currentBlue + 1);
+                } else {
+                    theSet.getBlueRotationPlusMinus().set(p.getBlueRotation(), currentBlue - 1);
+                }
+            }
+            int newSetBlueRotation = theSet.getBlueRotation() + diff;
+            if (newSetBlueRotation < 0) {
+                newSetBlueRotation = newSetBlueRotation + 6;
+            }
+            theSet.setBlueRotation(newSetBlueRotation % 6);
+        }
+    }
+
         public void highlightRedRotation(){
         ASet theSet = AppData.game.getSets().get(chosenSet);
         int redStart = 0;
@@ -296,6 +379,36 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 case 5: redRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
             }
         }
+    public void highlightBlueRotation(){
+        ASet theSet = AppData.game.getSets().get(chosenSet);
+        int blueStart = 0;
+        if(theSet.getPointHistory().size() == 0){
+            blueStart = theSet.getBlueRotation();
+        }
+        else{
+            blueStart = theSet.getPointHistory().get(0).getBlueRotation();
+        }
+
+        blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
+        switch (blueStart){
+            case 0: blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                break;
+            case 1: blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                break;
+            case 2: blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                break;
+            case 3: blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                break;
+            case 4: blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+                break;
+            case 5: blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
+        }
+    }
 
         private void choseSet(){
             set1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));

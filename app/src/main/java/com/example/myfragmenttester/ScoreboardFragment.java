@@ -140,6 +140,33 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                 System.out.println(key);
                 Game aGame = new Game(key, (Map<String, Object>) snapshot.getValue());
                 AppData.publicGames.add(aGame);
+                mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        ASet aSet = new ASet(snapshot.getKey(), (Map<String, Object>)snapshot.getValue());
+                        aGame.addSet(aSet);
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override

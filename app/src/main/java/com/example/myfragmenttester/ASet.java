@@ -70,10 +70,10 @@ public class ASet  {
             serve = (String) dict.get("serve");
         }
         if (dict.containsKey("redRotation")) {
-            redRotation = (int) dict.get("redRotation");
+            redRotation = Math.toIntExact((Long)dict.get("redRotation"));
         }
         if (dict.containsKey("blueRotation")) {
-            blueRotation = (int) dict.get("blueRotation");
+            blueRotation = Math.toIntExact((Long)dict.get("blueRotation"));;
         }
         if (dict.containsKey("redRotationPlusMinus")) {
             redRotationPlusMinus = (ArrayList<Integer>) dict.get("redRotationPlusMinus");
@@ -82,34 +82,34 @@ public class ASet  {
             blueRotationPlusMinus = (ArrayList<Integer>) dict.get("blueRotationPlusMinus");
         }
         if (dict.containsKey("redAttack")) {
-            redAttack = (int) dict.get("redAttack");
+            redAttack = Math.toIntExact((Long)dict.get("redAttack"));
         }
         if (dict.containsKey("redOne")) {
-            redOne = (int) dict.get("redOne");
+            redOne = Math.toIntExact((Long)dict.get("redOne"));
         }
         if (dict.containsKey("redTwo")) {
-            redTwo = (int) dict.get("redTwo");
+            redTwo = Math.toIntExact((Long)dict.get("redTwo"));
         }
         if (dict.containsKey("redThree")) {
-            redThree = (int) dict.get("redThree");
+            redThree = Math.toIntExact((Long)dict.get("redThree"));
         }
         if (dict.containsKey("blueAttack")) {
-            blueAttack = (int) dict.get("blueAttack");
+            blueAttack = Math.toIntExact((Long)dict.get("blueAttack"));
         }
         if (dict.containsKey("blueOne")) {
-            blueOne = (int) dict.get("blueOne");
+            blueOne = Math.toIntExact((Long)dict.get("blueOne"));
         }
         if (dict.containsKey("blueTwo")) {
-            blueTwo = (int) dict.get("blueTwo");
+            blueTwo = Math.toIntExact((Long)dict.get("blueTwo"));
         }
         if (dict.containsKey("blueThree")) {
-            blueThree = (int) dict.get("blueThree");
+            blueThree = Math.toIntExact((Long)dict.get("blueThree"));
         }
         if (dict.containsKey("redDigs")) {
-            redDigs = (int) dict.get("redDigs");
+            redDigs = Math.toIntExact((Long)dict.get("redDigs"));
         }
         if (dict.containsKey("blueDigs")) {
-            blueDigs = (int) dict.get("blueDigs");
+            blueDigs = Math.toIntExact((Long)dict.get("blueDigs"));
         }
     }
 

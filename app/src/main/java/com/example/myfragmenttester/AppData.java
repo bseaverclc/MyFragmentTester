@@ -15,5 +15,5 @@ public class AppData {
     public static ArrayList<Game> publicGames = new ArrayList<Game>();
 
     public static int gameRedTeamColor = Color.RED;
-    public static int gameBlueTeamColor = Color.BLUE;
+    public static int gameBlueTeamColor = Color.rgb(200,200,255);
 }

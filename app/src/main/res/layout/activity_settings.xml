@@ -172,6 +172,8 @@
             android:layout_height="wrap_content"
             android:text="Settings for each set"
             android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginTop="50dp"
             />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -264,7 +266,8 @@
                 android:layout_weight="30"
                 android:text="Red Starting Rotation"
                 android:gravity="center"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                />
 
             <RadioGroup
                 android:layout_width="0dp"
@@ -333,6 +336,104 @@
                     />
                 <RadioButton
                     android:id="@+id/redRot6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+
+
+            </RadioGroup>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="30"
+                android:text="Blue Starting Rotation"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:foregroundTint="@color/black"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/blueRot1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/blueRot2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/blueRot3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/blueRot4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/blueRot5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:gravity="center"
+                    android:layout_weight="20"
+                    android:padding="1dp"
+                    android:button="@null"
+
+                    />
+                <RadioButton
+                    android:id="@+id/blueRot6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="6"
