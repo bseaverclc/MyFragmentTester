@@ -12,7 +12,7 @@ public class ASet  {
     private int blueRotation;
     private ArrayList<Integer> redRotationPlusMinus;
     private ArrayList<Integer> blueRotationPlusMinus;
-    private ArrayList<Point> pointHistory;
+    private ArrayList<Point> pointHistory = new ArrayList<Point>();
     private int redScore;
     private int blueScore;
     private String uid;
@@ -65,7 +65,14 @@ public class ASet  {
     public ASet(String key, Map<String, Object> dict) {
         uid = key;
         redStats = (Map<String, Integer>) dict.get("redStats");
+        for (String theKey : redStats.keySet()) {
+            redStats.put(theKey, Math.toIntExact((Long)(Object)redStats.get(theKey)));
+        }
+
         blueStats = (Map<String, Integer>) dict.get("blueStats");
+        for (String theKey : blueStats.keySet()) {
+            blueStats.put(theKey, Math.toIntExact((Long)(Object)blueStats.get(theKey)));
+        }
         if (dict.containsKey("serve")) {
             serve = (String) dict.get("serve");
         }
@@ -77,9 +84,15 @@ public class ASet  {
         }
         if (dict.containsKey("redRotationPlusMinus")) {
             redRotationPlusMinus = (ArrayList<Integer>) dict.get("redRotationPlusMinus");
+            for(int i = 0; i<redRotationPlusMinus.size(); i++){
+                redRotationPlusMinus.set(i,Math.toIntExact((Long)(Object)redRotationPlusMinus.get(i)));
+            }
         }
         if (dict.containsKey("blueRotationPlusMinus")) {
             blueRotationPlusMinus = (ArrayList<Integer>) dict.get("blueRotationPlusMinus");
+            for(int i = 0; i<blueRotationPlusMinus.size(); i++){
+                blueRotationPlusMinus.set(i,Math.toIntExact((Long)(Object)blueRotationPlusMinus.get(i)));
+            }
         }
         if (dict.containsKey("redAttack")) {
             redAttack = Math.toIntExact((Long)dict.get("redAttack"));

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class PublicGames extends AppCompatActivity {
@@ -25,7 +27,21 @@ public class PublicGames extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         setTitle("Public Games");
-//        attachListener();
+       attachListener();
 //        eventPosition = 0;
+    }
+
+    public void attachListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("clicked on a public game");
+                AppData.game = AppData.publicGames.get(position);
+                AppData.gameChanged = true;
+                finish();
+
+            }
+        });
     }
 }

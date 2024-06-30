@@ -26,8 +26,8 @@ public class Point {
     public Point(String key, Map<String, Object> dict) {
         this.uid = key;
         this.serve = (String) dict.get("serve");
-        this.redRotation = (int) dict.get("redRotation");
-        this.blueRotation = (int) dict.get("blueRotation");
+        this.redRotation = Math.toIntExact((Long)dict.get("redRotation"));
+        this.blueRotation = Math.toIntExact((Long)dict.get("blueRotation"));
         this.who = (String) dict.get("who");
         this.why = (String) dict.get("why");
         this.score = (String) dict.get("score");

@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -58,6 +59,18 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
+        if(AppData.gameChanged) {
+            set = AppData.game.getSets().get(0);
+            set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
+            set2.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
+            set3.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
+            set4.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
+            set5.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
+            set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.radio_on));
+            AppData.selectedSet = 0;
+            AppData.gameChanged = false;
+        }
+        updateScreen();
         updateBackgroundColors();
     }
 
@@ -142,9 +155,46 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                 AppData.publicGames.add(aGame);
                 mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        ASet aSet = new ASet(snapshot.getKey(), (Map<String, Object>)snapshot.getValue());
+                    public void onChildAdded(@NonNull DataSnapshot snapshot2, @Nullable String previousChildName) {
+                        ASet aSet = new ASet(snapshot2.getKey(), (Map<String, Object>)snapshot2.getValue());
                         aGame.addSet(aSet);
+
+                        mDatabase.child("games").child(key).child("sets").child(snapshot2.getKey()).child("pointHistory").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
+                                System.out.println("heard Point added on firebase");
+                                if(aSet.getPointHistory() != null) {
+                                    for (Point p : aSet.getPointHistory()) {
+                                        if (p.getUid() == snapshot3.getKey()) {
+                                            return;
+                                        }
+                                    }
+                                }
+                                aSet.addPoint(snapshot3.getKey(), (Map <String,Object>) snapshot3.getValue());
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
                     }
 
                     @Override
@@ -347,6 +397,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     public void updateScreen(){
+       redTeamEditText.setText(AppData.game.getTeams().get(0));
+       blueTeamEditText.setText(AppData.game.getTeams().get(1));
+
         redScoreButton.setText("" + set.getRedStats().get("redScore"));
         redAceButton.setText("Ace\n"+set.getRedStats().get("Ace"));
         redBlockButton.setText("Block\n"+set.getRedStats().get("Block"));
@@ -379,7 +432,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     public void updatePercents(){
 // red hit % calculation
         if (set.getRedAttack() != 0) {
-            double redPct = (set.getRedStats().get("Kill") - set.getBlueStats().get("Opponent Attack Err")) / (double) set.getRedAttack();
+
+            double redPct = (set.getRedStats().get("Kill") - set.getBlueStats().get("Opponent Attack Err")) / (double)set.getRedAttack();
 
             redHitPctView.setText("Hit % " + String.format("%.3f", redPct));
         }

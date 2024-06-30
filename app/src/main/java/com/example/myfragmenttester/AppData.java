@@ -16,4 +16,6 @@ public class AppData {
 
     public static int gameRedTeamColor = Color.RED;
     public static int gameBlueTeamColor = Color.rgb(200,200,255);
+
+    public static boolean gameChanged = false;
 }
