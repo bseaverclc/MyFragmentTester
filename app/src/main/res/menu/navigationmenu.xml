@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    >
 
     <item
         android:id="@+id/settings"
-        android:title="Settings" />
+        android:title="Settings"
+        />
     <item
         android:id="@+id/newGame"
         android:title="Create New Game" />

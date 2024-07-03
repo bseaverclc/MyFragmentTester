@@ -11,9 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -48,8 +51,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         createButtons(v);
         createEditTexts(v);
         createGame();
-        updateScreen();
-        setNum = 1;
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         System.out.println("database reference : " + mDatabase);
         readGamesFromFirebase();
@@ -150,7 +152,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 String key = snapshot.getKey();
-                System.out.println(key);
+                //System.out.println(key);
                 Game aGame = new Game(key, (Map<String, Object>) snapshot.getValue());
                 AppData.publicGames.add(aGame);
                 mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
@@ -162,7 +164,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                         mDatabase.child("games").child(key).child("sets").child(snapshot2.getKey()).child("pointHistory").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
-                                System.out.println("heard Point added on firebase");
+                               // System.out.println("heard Point added on firebase");
                                 if(aSet.getPointHistory() != null) {
                                     for (Point p : aSet.getPointHistory()) {
                                         if (p.getUid() == snapshot3.getKey()) {
@@ -242,46 +244,93 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
 
-    private void createEditTexts(View view){
+    private void createEditTexts(View view) {
         redTeamEditText = view.findViewById(R.id.redTeamName);
         blueTeamEditText = view.findViewById(R.id.blueTeamName);
-        redTeamEditText.addTextChangedListener(new TextWatcher() {
+
+
+//        redTeamEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                System.out.println("text changed");
+//                AppData.game.getTeams().set(0, s.toString());
+//
+//
+//            }
+//        });
+
+
+
+
+
+        redTeamEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    //Clear focus here from edittext
+
+
+                    redTeamEditText.clearFocus();
+                   // redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                    AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
+                    return false;
+                }
+                return false;
 
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                System.out.println("text changed");
-                AppData.game.getTeams().set(0,s.toString());
-
-            }
         });
 
-        blueTeamEditText.addTextChangedListener(new TextWatcher() {
+        blueTeamEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_DONE){
+                    //Clear focus here from edittext
+
+
+                    blueTeamEditText.clearFocus();
+                    //blueTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                    AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
+                    return false;
+                }
+                return false;
 
             }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                System.out.println("blue text changed");
-                AppData.game.getTeams().set(1,s.toString());
-
-            }
         });
+
+//        blueTeamEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                System.out.println("blue text changed");
+//                AppData.game.getTeams().set(1,s.toString());
+//
+//            }
+//        });
+
+
     }
 
     private void createButtons(View view){
@@ -376,8 +425,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
     public void createGame(){
         System.out.println("new Game being created");
-        teams.add("Red Team");
-        teams.add("Blue Team");
+        teams = new ArrayList<String>();
+        teams.add("");
+        teams.add("");
         AppData.game = new Game(teams,new Date(), false);
         AppData.game.getSets().add(new ASet());
         AppData.game.getSets().add(new ASet());
@@ -387,6 +437,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         set = AppData.game.getSets().get(0);
         set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
         AppData.selectedSet = 0;
+        updateScreen();
+        setNum = 1;
+
 
 //        self.setSegmentedControlOutlet.selectedSegmentIndex = 0
 //        AppData.canEdit = true
@@ -427,6 +480,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         blueThreeButton.setText("3SR\n" + set.getBlueThree());
 
         updatePercents();
+       // AppData.game.updateFirebase();
     }
 
     public void updatePercents(){
@@ -819,6 +873,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                 statsHorizontalLayout.addView(blueStatsLayout);
                 layout = 0;
             }
+
+
 
         }
 

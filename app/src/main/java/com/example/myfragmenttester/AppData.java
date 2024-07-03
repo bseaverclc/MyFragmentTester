@@ -13,9 +13,11 @@ public class AppData {
     public static boolean canEdit = true;
 
     public static ArrayList<Game> publicGames = new ArrayList<Game>();
+    public static ArrayList<Game> myGames = new ArrayList<Game>();
 
     public static int gameRedTeamColor = Color.RED;
     public static int gameBlueTeamColor = Color.rgb(200,200,255);
 
     public static boolean gameChanged = false;
+    public static boolean savedOnce = false;
 }
