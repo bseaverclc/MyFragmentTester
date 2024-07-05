@@ -1,5 +1,7 @@
 package com.example.myfragmenttester;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -121,6 +123,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private TextView redHitPctView;
     private TextView redPassAvgView;
     private TextView redEarnedPctView;
+    private TextView redRotationView, blueRotationView;
 
     private Button blueScoreButton;
     private Button blueAceButton;
@@ -366,9 +369,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redHitPctView = view.findViewById(R.id.redHitPct);
         redPassAvgView = view.findViewById(R.id.redPassAvg);
         redEarnedPctView = view.findViewById(R.id.redEarnedPct);
+        redRotationView = view.findViewById(R.id.redRotationText);
+
         blueHitPctView = view.findViewById(R.id.blueHitPct);
         bluePassAvgView = view.findViewById(R.id.bluePassAvg);
         blueEarnedPctView = view.findViewById(R.id.blueEarnedPct);
+        blueRotationView = view.findViewById(R.id.blueRotationText);
 
 
         redScoreButton = (Button)(view.findViewById(R.id.redScore));
@@ -452,8 +458,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     public void updateScreen(){
        redTeamEditText.setText(AppData.game.getTeams().get(0));
        blueTeamEditText.setText(AppData.game.getTeams().get(1));
-
-        redScoreButton.setText("" + set.getRedStats().get("redScore"));
+        if(set.getServe().equals("red") && set.getPointHistory().size()!=0) {
+            redScoreButton.setText("*" + set.getRedStats().get("redScore"));
+        }
+        else{
+            redScoreButton.setText("" + set.getRedStats().get("redScore"));
+        }
         redAceButton.setText("Ace\n"+set.getRedStats().get("Ace"));
         redBlockButton.setText("Block\n"+set.getRedStats().get("Block"));
         redKillButton.setText("Kill\n"+set.getRedStats().get("Kill"));
@@ -466,7 +476,13 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redTwoButton.setText("2SR\n" + set.getRedTwo());
         redThreeButton.setText("3SR\n" + set.getRedThree());
 
-        blueScoreButton.setText("" + set.getBlueStats().get("blueScore"));
+        if(set.getServe().equals("blue") && set.getPointHistory().size() != 0) {
+            blueScoreButton.setText("*" + set.getBlueStats().get("blueScore"));
+        }
+        else{
+            blueScoreButton.setText("" + set.getBlueStats().get("blueScore"));
+        }
+
         blueAceButton.setText("Ace\n"+set.getBlueStats().get("Ace"));
         blueBlockButton.setText("Block\n"+set.getBlueStats().get("Block"));
         blueKillButton.setText("Kill\n"+set.getBlueStats().get("Kill"));
@@ -511,6 +527,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             redEarnedPctView.setText("Earned " + redEarned + "%");
         }
 
+        redRotationView.setText("Roation " + (set.getRedRotation() + 1));
+
 // blue calculations
 // blue hit % calculation
         if (set.getBlueAttack() != 0) {
@@ -523,7 +541,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         }
         //blue pass average calculation
         int blueTotal = set.getBlueOne() + 2*set.getBlueTwo() + 3*set.getBlueThree();
-        int blueNum = set.getBlueOne() + set.getBlueTwo() + set.getBlueThree() + set.getBlueStats().get("Ace");
+        int blueNum = set.getBlueOne() + set.getBlueTwo() + set.getBlueThree() + set.getRedStats().get("Ace");
         if (blueNum !=0){
             double bluePassAvg = blueTotal/(double)blueNum;
             bluePassAvgView.setText("Pass Avg " + String.format("%.2f", bluePassAvg));
@@ -538,11 +556,20 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             blueEarnedPctView.setText("Earned " + blueEarned + "%");
         }
 
+        blueRotationView.setText("Roation " + (set.getBlueRotation() + 1));
+
 
 
     }
 
-    public void redPointUpdate(){
+    public void redPointUpdate(String why){
+        if(why.length() !=0) {
+            set.getRedStats().put(why, set.getRedStats().get(why) + 1);
+        }
+        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", why, set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
+
 
         int currentRedPlusRotation = set.getRedRotationPlusMinus().get(set.getRedRotation());
         set.getRedRotationPlusMinus().set(set.getRedRotation(), currentRedPlusRotation + 1);
@@ -557,9 +584,16 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             set.setRedRotation(0);
             }
         }
+        updateScreen();
     }
 
-    public void bluePointUpdate(){
+    public void bluePointUpdate(String why){
+        if(why.length() !=0) {
+            set.getBlueStats().put(why, set.getBlueStats().get(why) + 1);
+        }
+        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
+        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", why, set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
+        set.addPoint(point, AppData.game.getUid());
 
         int currentBlueRotation = set.getBlueRotationPlusMinus().get(set.getBlueRotation());
         set.getBlueRotationPlusMinus().set(set.getBlueRotation(), currentBlueRotation + 1);
@@ -574,68 +608,123 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                 set.setBlueRotation(0);
             }
         }
+        updateScreen();
+    }
+
+    public void setFirstServe(String who, String why){
+        AlertDialog.Builder firstServeAlert = new AlertDialog.Builder(getContext());
+        firstServeAlert.setTitle("Who served first?");
+        //firstServeAlert.setMessage("Who served first?");
+        String redTeam = "Red Team";
+        String blueTeam = "Blue Team";
+        if(AppData.game.getTeams().get(0).length() != 0){
+            redTeam = AppData.game.getTeams().get(0);
+        }
+        if(AppData.game.getTeams().get(1).length() != 0){
+            blueTeam = AppData.game.getTeams().get(1);
+        }
+        firstServeAlert.setItems(new CharSequence[]
+                        {redTeam, blueTeam},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+                                set.setServe("red");
+                                if(who.equals("red")) {
+                                    redPointUpdate(why);
+                                }
+                                else{
+                                    bluePointUpdate(why);
+                                }
+                                break;
+                            case 1:
+                                set.setServe("blue");
+                                if(who.equals("red")) {
+                                    redPointUpdate(why);
+                                }
+                                else{
+                                    bluePointUpdate(why);
+                                }
+                                break;
+
+                        }
+                    }
+                });
+        firstServeAlert.create().show();
+       //firstServeAlert.show();
     }
 
     public void redScoreAction(View view){
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "");
+        }
+        else{
+            redPointUpdate("");
+        }
+
     }
     public void redAceAction(View view){
-        set.getRedStats().put("Ace", set.getRedStats().get("Ace") + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Ace");
+        }
+        else{
+            redPointUpdate("Ace");
+        }
     }
 
     public void redBlockAction(View view){
-        // System.out.println("redkill");
-        set.getRedStats().put("Block", set.getRedStats().get("Block") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Block");
+        }
+        else{
+            redPointUpdate("Block");
+        }
         set.setBlueAttack(set.getBlueAttack() + 1);
         set.getRedStats().put("Opponent Attack Err", set.getRedStats().get("Opponent Attack Err") + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+
     }
     public void redKillAction(View view){
-        // System.out.println("redkill");
-        set.getRedStats().put("Kill", set.getRedStats().get("Kill") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Kill");
+        }
+        else{
+            redPointUpdate("Kill");
+        }
         set.setRedAttack(set.getRedAttack() + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+
 
     }
 
     public void redOppAttackErrAction(View view){
-        // System.out.println("redkill");
-        set.getRedStats().put("Opponent Attack Err", set.getRedStats().get("Opponent Attack Err") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Opponent Attack Err");
+        }
+        else{
+            redPointUpdate("Opponent Attack Err");
+        }
         set.setBlueAttack(set.getBlueAttack() + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opponent Attack Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+
     }
 
     public void redOppServeErrAction(View view){
-        // System.out.println("redkill");
-        set.getRedStats().put("Opponent Serve Err", set.getRedStats().get("Opponent Serve Err") + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opponent Serve Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Opponent Serve Err");
+        }
+        else{
+            redPointUpdate("Opponent Serve Err");
+        }
+
     }
     public void redOppOtherErrAction(View view){
-        // System.out.println("redkill");
-        set.getRedStats().put("Opponent Err", set.getRedStats().get("Opponent Err") + 1);
-        set.getRedStats().put("redScore", set.getRedStats().get("redScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "red", "Opponent Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        redPointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("red", "Opponent Err");
+        }
+        else{
+            redPointUpdate("Opponent Err");
+        }
+
     }
     public void redAtkAction(View view){
         set.setRedAttack(set.getRedAttack() + 1);
@@ -656,65 +745,80 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
     // Blue Actions
     public void blueScoreAction(View view){
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "");
+        }
+        else{
+            bluePointUpdate("");
+        }
+
+
+
     }
     public void blueAceAction(View view){
-        set.getBlueStats().put("Ace", set.getBlueStats().get("Ace") + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Ace", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Ace");
+        }
+        else{
+            bluePointUpdate("Ace");
+        }
+
     }
 
     public void blueBlockAction(View view){
-        // System.out.println("bluekill");
-        set.getBlueStats().put("Block", set.getBlueStats().get("Block") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Block");
+        }
+        else{
+            bluePointUpdate("Block");
+        }
+
         set.setRedAttack(set.getRedAttack() + 1);
         set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Block", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+
     }
     public void blueKillAction(View view){
-        // System.out.println("bluekill");
-        set.getBlueStats().put("Kill", set.getBlueStats().get("Kill") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Kill");
+        }
+        else{
+            bluePointUpdate("Kill");
+        }
+
         set.setBlueAttack(set.getBlueAttack() + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Kill", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+
 
     }
 
     public void blueOppAttackErrAction(View view){
-        // System.out.println("bluekill");
-        set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Opponent Attack Err");
+        }
+        else{
+            bluePointUpdate("Opponent Attack Err");
+        }
+
         set.setRedAttack(set.getRedAttack() + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Attack Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+
     }
 
     public void blueOppServeErrAction(View view){
-        // System.out.println("bluekill");
-        set.getBlueStats().put("Opponent Serve Err", set.getBlueStats().get("Opponent Serve Err") + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Serve Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Opponent Serve Err");
+        }
+        else{
+            bluePointUpdate("Opponent Serve Err");
+        }
+
     }
     public void blueOppOtherErrAction(View view){
-        // System.out.println("bluekill");
-        set.getBlueStats().put("Opponent Err", set.getBlueStats().get("Opponent Err") + 1);
-        set.getBlueStats().put("blueScore", set.getBlueStats().get("blueScore") + 1);
-        Point point = new Point(set.getServe(), set.getRedRotation(), set.getBlueRotation(), "blue", "Opponent Err", set.getRedStats().get("redScore") + "-" + set.getBlueStats().get("blueScore"));
-        set.addPoint(point, AppData.game.getUid());
-        bluePointUpdate();
+        if(set.getPointHistory().size() == 0){
+            setFirstServe("blue", "Opponent Err");
+        }
+        else{
+            bluePointUpdate("Opponent Err");
+        }
+
     }
     public void blueAtkAction(View view){
         set.setBlueAttack(set.getBlueAttack() + 1);

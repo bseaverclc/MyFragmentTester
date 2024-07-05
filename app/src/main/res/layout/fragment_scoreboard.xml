@@ -248,11 +248,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
 
-                            android:padding="2dp"
+                            android:padding="0dp"
                             android:gravity="left"
+                            android:layout_gravity="center_vertical"
                             android:text="Hit %"
-                            android:layout_weight="10"
-
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
+                            android:autoSizeMinTextSize="12sp"
+                            android:autoSizeMaxTextSize="100sp"
                             android:textColor="@color/black"
 
                             />
@@ -260,11 +263,11 @@
                             android:id="@+id/redPassAvg"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:padding="2dp"
+                            android:padding="0dp"
                             android:gravity="left"
                             android:text="Passing Avg"
-                            android:layout_weight="10"
-
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
                             android:textColor="@color/black"
                             />
 
@@ -272,11 +275,23 @@
                             android:id="@+id/redEarnedPct"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:padding="2dp"
+                            android:padding="0dp"
                             android:gravity="left"
                             android:text="Earned %"
-                            android:layout_weight="10"
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
+                            android:textColor="@color/black"
+                            />
 
+                        <TextView
+                            android:id="@+id/redRotationText"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="0dp"
+                            android:gravity="left"
+                            android:text="Rotation 1"
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
                             android:textColor="@color/black"
                             />
                         <Button
@@ -285,11 +300,11 @@
                             android:layout_height="0dp"
                             android:text="00"
                             android:maxLines="1"
-                            android:layout_weight="40"
+                            android:layout_weight="38"
                             android:textColor="@color/black"
                             android:backgroundTint="@color/red"
                             android:autoSizeTextType="uniform"
-                            android:padding="5dp"
+                            android:padding="1dp"
                             />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
@@ -531,10 +546,11 @@
                             android:id="@+id/blueHitPct"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:padding="2dp"
+                            android:padding="0dp"
                             android:gravity="left"
                             android:text="Hit %"
-                            android:layout_weight="10"
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
                             android:textColor="@color/black"
 
                             />
@@ -542,10 +558,11 @@
                             android:id="@+id/bluePassAvg"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:padding="2dp"
+                            android:padding="0dp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="left"
                             android:text="Passing Avg"
-                            android:layout_weight="10"
+                            android:layout_weight="8"
                             android:textColor="@color/black"
                             />
 
@@ -553,10 +570,23 @@
                             android:id="@+id/blueEarnedPct"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:padding="2dp"
+                            android:padding="0dp"
+                            android:autoSizeTextType="uniform"
                             android:gravity="left"
                             android:text="Earned %"
-                            android:layout_weight="10"
+                            android:layout_weight="8"
+                            android:textColor="@color/black"
+                            />
+
+                        <TextView
+                            android:id="@+id/blueRotationText"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="0dp"
+                            android:gravity="left"
+                            android:text="Rotation 1"
+                            android:layout_weight="8"
+                            android:autoSizeTextType="uniform"
                             android:textColor="@color/black"
                             />
                         <Button
