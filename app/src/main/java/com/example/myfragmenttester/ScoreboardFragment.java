@@ -110,7 +110,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     //
     private DatabaseReference mDatabase;
     private int layout = 0;
-    private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout, redScorePanel, blueScorePanel;
+    private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout, redScorePanel, blueScorePanel, redPositiveAndScoreLayout, redPositiveLayout, bluePositiveAndScoreLayout, bluePositiveLayout;
     private EditText redTeamEditText, blueTeamEditText;
     private RadioButton set1,set2,set3,set4,set5;
 
@@ -219,7 +219,15 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                                String pKey = snapshot.getKey();
+                                for(int i = aSet.getPointHistory().size() -1; i >=0; i--){
+                                    if(aSet.getPointHistory().get(i).getUid().equals(pKey)){
+                                        aSet.getPointHistory().remove(i);
+                                        System.out.println("heard point removed");
+                                        //updateScreen();
+                                        break;
+                                    }
+                                }
                             }
 
                             @Override
@@ -238,11 +246,18 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        System.out.println("heard a set change");
+
                         String setKey = snapshot.getKey();
                         for(ASet s: aGame.getSets()){
                             if(s.getUid().equals(setKey)){
                                 s.updateSet((Map<String, Object>)snapshot.getValue());
+                                System.out.println("heard a set change");
+                                if(AppData.game.getUid().equals(aGame.getUid())){
+                                    updateScreen();
+                                }
+//                                Intent intent = new Intent();
+//                                intent.setAction("setUpdated");
+//                                getContext().sendBroadcast(intent);
                             }
                         }
                        // ASet aSet = new ASet(setKey, (Map<String, Object>)snapshot.getValue());
@@ -293,7 +308,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                System.out.println("Heard a game change");
+
 
                 String key = snapshot.getKey();
                 if(AppData.game.getUid().equals(key) && AppData.canEdit){
@@ -304,6 +319,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                     for(Game g: AppData.publicGames){
                         if(g.getUid().equals(key)){
                             g.updateGame((Map<String,Object>)snapshot.getValue());
+                            System.out.println("Heard a game change");
                             break;
                         }
                     }
@@ -426,6 +442,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         statsHorizontalLayout = view.findViewById(R.id.statsHorizontalLayout);
        redStatsLayout = view.findViewById(R.id.redStatsLayout);
        blueStatsLayout = view.findViewById(R.id.blueStatsLayout);
+       redPositiveAndScoreLayout = view.findViewById(R.id.redPositiveAndScoreLayout);
+       redPositiveLayout = view.findViewById(R.id.redPositiveLayout);
+       bluePositiveAndScoreLayout = view.findViewById(R.id.bluePositiveAndScoreLayout);
+       bluePositiveLayout = view.findViewById(R.id.bluePositiveLayout);
+
+
 
         undoButton = view.findViewById(R.id.undoPoint);
         undoButton.setOnClickListener(this);
@@ -545,6 +567,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     public void updateScreen(){
+        System.out.println("updateScreen");
        redTeamEditText.setText(AppData.game.getTeams().get(0));
        blueTeamEditText.setText(AppData.game.getTeams().get(1));
         if(set.getServe().equals("red") && set.getPointHistory().size()!=0) {
@@ -1111,13 +1134,27 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
             if (layout == 0) {
                 statsHorizontalLayout.removeAllViews();
+                bluePositiveAndScoreLayout.removeAllViews();
+                bluePositiveAndScoreLayout.addView(bluePositiveLayout);
+                bluePositiveAndScoreLayout.addView(blueScorePanel);
                 statsHorizontalLayout.addView(blueStatsLayout);
+
+                redPositiveAndScoreLayout.removeAllViews();
+                redPositiveAndScoreLayout.addView(redScorePanel);
+                redPositiveAndScoreLayout.addView(redPositiveLayout);
                 statsHorizontalLayout.addView(redStatsLayout);
                 layout = 1;
             }
             else{
                 statsHorizontalLayout.removeAllViews();
+                redPositiveAndScoreLayout.removeAllViews();
+                redPositiveAndScoreLayout.addView(redPositiveLayout);
+                redPositiveAndScoreLayout.addView(redScorePanel);
                 statsHorizontalLayout.addView(redStatsLayout);
+
+                bluePositiveAndScoreLayout.removeAllViews();
+                bluePositiveAndScoreLayout.addView(blueScorePanel);
+                bluePositiveAndScoreLayout.addView(bluePositiveLayout);
                 statsHorizontalLayout.addView(blueStatsLayout);
                 layout = 0;
             }
