@@ -123,37 +123,54 @@ public class Game implements Serializable {
     }
 
     public void updateGame(Map<String, Object> dict) {
-        if (dict.get("type") instanceof Integer) {
-            type = (int) dict.get("type");
+        if (dict.containsKey("type")) {
+            this.type = Math.toIntExact((Long)dict.get("type"));
         } else {
-            type = 0;
+            this.type = 0;
         }
         teams = (List<String>) dict.get("teams");
         setWins = (List<Integer>) dict.get("setWins");
 
-        if (dict.get("intDate") instanceof Integer) {
-            intDate = (int) dict.get("intDate");
-            date = new Date((long) intDate * 1000);
+        if (dict.containsKey("intDate")) {
+            this.intDate = Math.toIntExact((Long)dict.get("intDate"));
+            this.date = new Date((long) this.intDate * 1000);
         } else {
-            SimpleDateFormat formatter1 = new SimpleDateFormat("MM/dd/yy HH:mm aa");
+            DateFormat formatter1 = new SimpleDateFormat("MM/dd/yy HH:mm aa");
+
             String dateString = (String) dict.get("date");
             String timeString = (String) dict.get("time");
             System.out.println(dateString + " " + timeString);
             String fullDate = dateString + " " + timeString;
 
             try {
-                date = formatter1.parse(fullDate);
-                intDate = (int) (date.getTime() / 1000);
+                this.date = formatter1.parse(fullDate);
+                this.intDate = (int) (this.date.getTime() / 1000);
 
-                SimpleDateFormat dateFormatter = new SimpleDateFormat();
-                dateFormatter.applyPattern("MM/dd/yy HH:mm aa");
-                String convertedDate = dateFormatter.format(date);
+                DateFormat dateFormatter = new SimpleDateFormat();
+                // dateFormatter.setDateStyle(DateFormat.SHORT);
+                //  dateFormatter.setTimeStyle(DateFormat.SHORT);
+
+                String convertedDate = dateFormatter.format(this.date);
                 System.out.println(convertedDate);
             } catch (ParseException e) {
                 System.out.println("Error Reading date");
-                date = new Date();
-                intDate = (int) (date.getTime() / 1000);
+                this.date = new Date();
+                this.intDate = (int) (this.date.getTime() / 1000);
             }
+
+//            try {
+//                date = formatter1.parse(fullDate);
+//                intDate = (int) (date.getTime() / 1000);
+//
+//                SimpleDateFormat dateFormatter = new SimpleDateFormat();
+//                dateFormatter.applyPattern("MM/dd/yy HH:mm aa");
+//                String convertedDate = dateFormatter.format(date);
+//                System.out.println(convertedDate);
+//            } catch (ParseException e) {
+//                System.out.println("Error Reading date");
+//                date = new Date();
+//                intDate = (int) (date.getTime() / 1000);
+//            }
         }
     }
 
@@ -164,6 +181,7 @@ public class Game implements Serializable {
     }
 
     public void addSet(ASet set) {
+
         sets.add(set);
     }
 

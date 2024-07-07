@@ -126,6 +126,69 @@ public class ASet  {
         }
     }
 
+    public void updateSet(Map<String, Object> dict){
+        redStats = (Map<String, Integer>) dict.get("redStats");
+        for (String theKey : redStats.keySet()) {
+            redStats.put(theKey, Math.toIntExact((Long)(Object)redStats.get(theKey)));
+        }
+
+        blueStats = (Map<String, Integer>) dict.get("blueStats");
+        for (String theKey : blueStats.keySet()) {
+            blueStats.put(theKey, Math.toIntExact((Long)(Object)blueStats.get(theKey)));
+        }
+        if (dict.containsKey("serve")) {
+            serve = (String) dict.get("serve");
+        }
+        if (dict.containsKey("redRotation")) {
+            redRotation = Math.toIntExact((Long)dict.get("redRotation"));
+        }
+        if (dict.containsKey("blueRotation")) {
+            blueRotation = Math.toIntExact((Long)dict.get("blueRotation"));;
+        }
+        if (dict.containsKey("redRotationPlusMinus")) {
+            redRotationPlusMinus = (ArrayList<Integer>) dict.get("redRotationPlusMinus");
+            for(int i = 0; i<redRotationPlusMinus.size(); i++){
+                redRotationPlusMinus.set(i,Math.toIntExact((Long)(Object)redRotationPlusMinus.get(i)));
+            }
+        }
+        if (dict.containsKey("blueRotationPlusMinus")) {
+            blueRotationPlusMinus = (ArrayList<Integer>) dict.get("blueRotationPlusMinus");
+            for(int i = 0; i<blueRotationPlusMinus.size(); i++){
+                blueRotationPlusMinus.set(i,Math.toIntExact((Long)(Object)blueRotationPlusMinus.get(i)));
+            }
+        }
+        if (dict.containsKey("redAttack")) {
+            redAttack = Math.toIntExact((Long)dict.get("redAttack"));
+        }
+        if (dict.containsKey("redOne")) {
+            redOne = Math.toIntExact((Long)dict.get("redOne"));
+        }
+        if (dict.containsKey("redTwo")) {
+            redTwo = Math.toIntExact((Long)dict.get("redTwo"));
+        }
+        if (dict.containsKey("redThree")) {
+            redThree = Math.toIntExact((Long)dict.get("redThree"));
+        }
+        if (dict.containsKey("blueAttack")) {
+            blueAttack = Math.toIntExact((Long)dict.get("blueAttack"));
+        }
+        if (dict.containsKey("blueOne")) {
+            blueOne = Math.toIntExact((Long)dict.get("blueOne"));
+        }
+        if (dict.containsKey("blueTwo")) {
+            blueTwo = Math.toIntExact((Long)dict.get("blueTwo"));
+        }
+        if (dict.containsKey("blueThree")) {
+            blueThree = Math.toIntExact((Long)dict.get("blueThree"));
+        }
+        if (dict.containsKey("redDigs")) {
+            redDigs = Math.toIntExact((Long)dict.get("redDigs"));
+        }
+        if (dict.containsKey("blueDigs")) {
+            blueDigs = Math.toIntExact((Long)dict.get("blueDigs"));
+        }
+    }
+
     public void addPoint(Point point, String gameUid) {
         pointHistory.add(point);
         System.out.println("added a point from addPoint(point: Point) function");

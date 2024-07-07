@@ -36,7 +36,7 @@ public class GameStatsAdapter extends ArrayAdapter<ASet> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View rowView = inflater.inflate(R.layout.custom_gamestats_view, null, true);
 
-        if(theSets.get(position).getRedStats().get("redScore") ==0) {
+        if(theSets.get(position).getRedStats().get("redScore") ==0 && theSets.get(position).getBlueStats().get("blueScore") == 0) {
             rowView.setVisibility(View.GONE);
         }
 

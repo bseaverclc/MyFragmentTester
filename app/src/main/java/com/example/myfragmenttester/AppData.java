@@ -10,7 +10,7 @@ public class AppData {
 
     public static Game game;
     public static int selectedSet = 0;
-    public static boolean canEdit = true;
+    public static boolean canEdit = false;
 
     public static ArrayList<Game> publicGames = new ArrayList<Game>();
     public static ArrayList<Game> myGames = new ArrayList<Game>();
@@ -20,4 +20,5 @@ public class AppData {
 
     public static boolean gameChanged = false;
     public static boolean savedOnce = false;
+
 }

@@ -73,6 +73,15 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.radio_on));
             AppData.selectedSet = 0;
             AppData.gameChanged = false;
+            AppData.canEdit = false;
+        }
+        if(!AppData.canEdit){
+            redTeamEditText.setEnabled(false);
+            blueTeamEditText.setEnabled(false);
+        }
+        else{
+            redTeamEditText.setEnabled(true);
+            blueTeamEditText.setEnabled(true);
         }
         updateScreen();
         updateBackgroundColors();
@@ -124,6 +133,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private TextView redPassAvgView;
     private TextView redEarnedPctView;
     private TextView redRotationView, blueRotationView;
+    private TextView redWhyView, blueWhyView;
 
     private Button blueScoreButton;
     private Button blueAceButton;
@@ -154,20 +164,43 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                System.out.println("heard game added on firebase");
                 String key = snapshot.getKey();
+
+
+                Map<String, Object> theMap = (Map<String, Object>) snapshot.getValue();
                 //System.out.println(key);
-                Game aGame = new Game(key, (Map<String, Object>) snapshot.getValue());
-                AppData.publicGames.add(aGame);
+                Game aGame = new Game(key, theMap);
+
+
+                // trying to get everything from the game in one place
+//                Map<String, Object> theMapSets = (Map<String, Object>) theMap.get("sets");
+//                for (String blah : theMapSets.keySet()) {
+//                    ASet theSet = new ASet(blah, (Map<String, Object>)(theMapSets.get(blah)));
+//
+//                    Map<String, Object> theMapPoints = (Map<String, Object>)((Map<String, Object>)theMapSets.get(blah)).get("pointHistory");
+//                    if(theMapPoints != null) {
+//                        for (String blah2 : theMapPoints.keySet()) {
+//                            theSet.addPoint(blah2, (Map<String, Object>) theMapPoints.get(blah2));
+//                        }
+//                    }
+//                    aGame.addSet(theSet);
+//
+//                }
+
+
+
                 mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot2, @Nullable String previousChildName) {
+                        System.out.println("heard set added on firebase");
                         ASet aSet = new ASet(snapshot2.getKey(), (Map<String, Object>)snapshot2.getValue());
                         aGame.addSet(aSet);
 
                         mDatabase.child("games").child(key).child("sets").child(snapshot2.getKey()).child("pointHistory").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
-                               // System.out.println("heard Point added on firebase");
+                                System.out.println("heard Point added on firebase");
                                 if(aSet.getPointHistory() != null) {
                                     for (Point p : aSet.getPointHistory()) {
                                         if (p.getUid() == snapshot3.getKey()) {
@@ -176,11 +209,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                                     }
                                 }
                                 aSet.addPoint(snapshot3.getKey(), (Map <String,Object>) snapshot3.getValue());
+                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
                             }
 
                             @Override
                             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                                System.out.println("heard a point change");
                             }
 
                             @Override
@@ -204,6 +238,37 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        System.out.println("heard a set change");
+                        String setKey = snapshot.getKey();
+                        for(ASet s: aGame.getSets()){
+                            if(s.getUid().equals(setKey)){
+                                s.updateSet((Map<String, Object>)snapshot.getValue());
+                            }
+                        }
+                       // ASet aSet = new ASet(setKey, (Map<String, Object>)snapshot.getValue());
+
+//                        mDatabase.child("games").child(key).child("sets").child(setKey).child("pointHistory").addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
+//                                System.out.println("Adding points to changed set");
+//                                if (aSet.getPointHistory() != null) {
+//                                    if (AppData.game.getUid().equals())
+//                                }
+//                                for (Point p : aSet.getPointHistory()) {
+//                                    if (p.getUid() == snapshot3.getKey()) {
+//                                        return;
+//                                    }
+//                                }
+//
+//                                aSet.addPoint(snapshot3.getKey(), (Map<String, Object>) snapshot3.getValue());
+//                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
+//                            }
+//                            });
+
+
+                        //aGame.addSet(aSet);
+
+
 
                     }
 
@@ -222,10 +287,27 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
                     }
                 });
+
+                AppData.publicGames.add(aGame);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                System.out.println("Heard a game change");
+
+                String key = snapshot.getKey();
+                if(AppData.game.getUid().equals(key) && AppData.canEdit){
+                    // I made the change, so do nothing
+                    return;
+                }
+                else{
+                    for(Game g: AppData.publicGames){
+                        if(g.getUid().equals(key)){
+                            g.updateGame((Map<String,Object>)snapshot.getValue());
+                            break;
+                        }
+                    }
+                }
 
             }
 
@@ -286,6 +368,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                     redTeamEditText.clearFocus();
                    // redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
+                    AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
                     return false;
                 }
                 return false;
@@ -305,6 +388,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                     blueTeamEditText.clearFocus();
                     //blueTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
+                    AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
                     return false;
                 }
                 return false;
@@ -370,11 +454,13 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redPassAvgView = view.findViewById(R.id.redPassAvg);
         redEarnedPctView = view.findViewById(R.id.redEarnedPct);
         redRotationView = view.findViewById(R.id.redRotationText);
+        redWhyView = view.findViewById(R.id.redWhyText);
 
         blueHitPctView = view.findViewById(R.id.blueHitPct);
         bluePassAvgView = view.findViewById(R.id.bluePassAvg);
         blueEarnedPctView = view.findViewById(R.id.blueEarnedPct);
         blueRotationView = view.findViewById(R.id.blueRotationText);
+        blueWhyView = view.findViewById(R.id.blueWhyText);
 
 
         redScoreButton = (Button)(view.findViewById(R.id.redScore));
@@ -445,6 +531,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         AppData.selectedSet = 0;
         updateScreen();
         setNum = 1;
+        AppData.canEdit = true;
+        redTeamEditText.setEnabled(true);
+        redTeamEditText.setEnabled(true);
 
 
 //        self.setSegmentedControlOutlet.selectedSegmentIndex = 0
@@ -528,6 +617,18 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         }
 
         redRotationView.setText("Roation " + (set.getRedRotation() + 1));
+        if(set.getPointHistory().size() > 0) {
+            if(set.getPointHistory().get(set.getPointHistory().size() - 1).getWho().equals("red")) {
+                redWhyView.setText("" + set.getPointHistory().get(set.getPointHistory().size() - 1).getWhy());
+            }
+            else{
+                redWhyView.setText("");
+            }
+        }
+        else{
+            redWhyView.setText("");
+        }
+
 
 // blue calculations
 // blue hit % calculation
@@ -557,6 +658,19 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         }
 
         blueRotationView.setText("Roation " + (set.getBlueRotation() + 1));
+
+        if(set.getPointHistory().size() > 0) {
+            if(set.getPointHistory().get(set.getPointHistory().size() - 1).getWho().equals("blue")) {
+                blueWhyView.setText("" + set.getPointHistory().get(set.getPointHistory().size() - 1).getWhy());
+            }
+            else{
+                blueWhyView.setText("");
+            }
+        }
+        else{
+            blueWhyView.setText("");
+        }
+
 
 
 
@@ -657,184 +771,214 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     public void redScoreAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "");
-        }
-        else{
-            redPointUpdate("");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "");
+            } else {
+                redPointUpdate("");
+            }
         }
 
     }
     public void redAceAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Ace");
-        }
-        else{
-            redPointUpdate("Ace");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Ace");
+            } else {
+                redPointUpdate("Ace");
+            }
         }
     }
 
     public void redBlockAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Block");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Block");
+            } else {
+                redPointUpdate("Block");
+            }
+            set.setBlueAttack(set.getBlueAttack() + 1);
+            set.getRedStats().put("Opponent Attack Err", set.getRedStats().get("Opponent Attack Err") + 1);
         }
-        else{
-            redPointUpdate("Block");
-        }
-        set.setBlueAttack(set.getBlueAttack() + 1);
-        set.getRedStats().put("Opponent Attack Err", set.getRedStats().get("Opponent Attack Err") + 1);
-
     }
     public void redKillAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Kill");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Kill");
+            } else {
+                redPointUpdate("Kill");
+            }
+            set.setRedAttack(set.getRedAttack() + 1);
         }
-        else{
-            redPointUpdate("Kill");
-        }
-        set.setRedAttack(set.getRedAttack() + 1);
-
 
     }
 
     public void redOppAttackErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Opponent Attack Err");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Opponent Attack Err");
+            } else {
+                redPointUpdate("Opponent Attack Err");
+            }
+            set.setBlueAttack(set.getBlueAttack() + 1);
         }
-        else{
-            redPointUpdate("Opponent Attack Err");
-        }
-        set.setBlueAttack(set.getBlueAttack() + 1);
-
     }
 
     public void redOppServeErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Opponent Serve Err");
-        }
-        else{
-            redPointUpdate("Opponent Serve Err");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Opponent Serve Err");
+            } else {
+                redPointUpdate("Opponent Serve Err");
+            }
         }
 
     }
     public void redOppOtherErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("red", "Opponent Err");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("red", "Opponent Err");
+            } else {
+                redPointUpdate("Opponent Err");
+            }
         }
-        else{
-            redPointUpdate("Opponent Err");
-        }
-
     }
     public void redAtkAction(View view){
-        set.setRedAttack(set.getRedAttack() + 1);
+        if(AppData.canEdit) {
+            set.setRedAttack(set.getRedAttack() + 1);
+        }
     }
     public void redDigAction(View view){
-        set.setRedDigs(set.getRedDigs() + 1);
+        if(AppData.canEdit) {
+            set.setRedDigs(set.getRedDigs() + 1);
+        }
     }
 
     public void redOneAction(View view){
-        set.setRedOne(set.getRedOne() + 1);
+        if(AppData.canEdit) {
+            set.setRedOne(set.getRedOne() + 1);
+        }
     }
     public void redTwoAction(View view){
-        set.setRedTwo(set.getRedTwo() + 1);
+        if(AppData.canEdit) {
+            set.setRedTwo(set.getRedTwo() + 1);
+        }
     }
     public void redThreeAction(View view){
-        set.setRedThree(set.getRedThree() + 1);
+        if(AppData.canEdit) {
+            set.setRedThree(set.getRedThree() + 1);
+        }
     }
 
     // Blue Actions
     public void blueScoreAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "");
-        }
-        else{
-            bluePointUpdate("");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "");
+            } else {
+                bluePointUpdate("");
+            }
         }
 
 
 
     }
     public void blueAceAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Ace");
-        }
-        else{
-            bluePointUpdate("Ace");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Ace");
+            } else {
+                bluePointUpdate("Ace");
+            }
         }
 
     }
 
     public void blueBlockAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Block");
-        }
-        else{
-            bluePointUpdate("Block");
-        }
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Block");
+            } else {
+                bluePointUpdate("Block");
+            }
 
-        set.setRedAttack(set.getRedAttack() + 1);
-        set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
+            set.setRedAttack(set.getRedAttack() + 1);
+            set.getBlueStats().put("Opponent Attack Err", set.getBlueStats().get("Opponent Attack Err") + 1);
+        }
 
     }
     public void blueKillAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Kill");
-        }
-        else{
-            bluePointUpdate("Kill");
-        }
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Kill");
+            } else {
+                bluePointUpdate("Kill");
+            }
 
-        set.setBlueAttack(set.getBlueAttack() + 1);
+            set.setBlueAttack(set.getBlueAttack() + 1);
+        }
 
 
     }
 
     public void blueOppAttackErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Opponent Attack Err");
-        }
-        else{
-            bluePointUpdate("Opponent Attack Err");
-        }
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Opponent Attack Err");
+            } else {
+                bluePointUpdate("Opponent Attack Err");
+            }
 
-        set.setRedAttack(set.getRedAttack() + 1);
+            set.setRedAttack(set.getRedAttack() + 1);
+        }
 
     }
 
     public void blueOppServeErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Opponent Serve Err");
-        }
-        else{
-            bluePointUpdate("Opponent Serve Err");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Opponent Serve Err");
+            } else {
+                bluePointUpdate("Opponent Serve Err");
+            }
         }
 
     }
     public void blueOppOtherErrAction(View view){
-        if(set.getPointHistory().size() == 0){
-            setFirstServe("blue", "Opponent Err");
-        }
-        else{
-            bluePointUpdate("Opponent Err");
+        if(AppData.canEdit) {
+            if (set.getPointHistory().size() == 0) {
+                setFirstServe("blue", "Opponent Err");
+            } else {
+                bluePointUpdate("Opponent Err");
+            }
         }
 
     }
     public void blueAtkAction(View view){
-        set.setBlueAttack(set.getBlueAttack() + 1);
+        if(AppData.canEdit) {
+            set.setBlueAttack(set.getBlueAttack() + 1);
+        }
     }
     public void blueDigAction(View view){
-        set.setBlueDigs(set.getBlueDigs() + 1);
+        if(AppData.canEdit) {
+            set.setBlueDigs(set.getBlueDigs() + 1);
+        }
     }
 
     public void blueOneAction(View view){
-        set.setBlueOne(set.getBlueOne() + 1);
+        if(AppData.canEdit) {
+            set.setBlueOne(set.getBlueOne() + 1);
+        }
     }
     public void blueTwoAction(View view){
-        set.setBlueTwo(set.getBlueTwo() + 1);
+        if(AppData.canEdit) {
+            set.setBlueTwo(set.getBlueTwo() + 1);
+        }
     }
     public void blueThreeAction(View view){
-        set.setBlueThree(set.getBlueThree() + 1);
+        if(AppData.canEdit) {
+            set.setBlueThree(set.getBlueThree() + 1);
+        }
     }
 
 
@@ -982,14 +1126,14 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
         }
 
-        if(id == R.id.publicGames){
-            System.out.println("public games pushed");
-            AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-            Collections.reverse(AppData.publicGames);
-            Intent intent = new Intent(getContext(), PublicGames.class);
-            //intent.putExtra("meet", meet);
-            startActivity(intent);
-        }
+//        if(id == R.id.publicGames){
+//            System.out.println("public games pushed");
+//            AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+//            Collections.reverse(AppData.publicGames);
+//            Intent intent = new Intent(getContext(), PublicGames.class);
+//            //intent.putExtra("meet", meet);
+//            startActivity(intent);
+//        }
 
 
 

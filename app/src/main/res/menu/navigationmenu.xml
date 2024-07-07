@@ -9,18 +9,12 @@
         android:title="Settings"
         />
     <item
-        android:id="@+id/newGame"
-        android:title="Create New Game" />
-    <item
-        android:id="@+id/saveGame"
-        android:title="Save Current Game" />
-    <item
         android:id="@+id/publicGames"
-        android:title="View Public Games" />
+        android:title="Public Games" />
 
     <item
         android:id="@+id/myGames"
-        android:title="View My Games" />
+        android:title="My Games" />
 
 
 
