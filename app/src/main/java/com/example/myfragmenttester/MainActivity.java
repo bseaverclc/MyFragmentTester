@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements
         return g;
     }
 
-    public boolean writeJson2(String yourSettingName){
+    public  boolean writeJson2(String yourSettingName){
         SharedPreferences mSettings = getSharedPreferences("YourPreferenceName", Context.MODE_PRIVATE);
         SharedPreferences.Editor mEditor = mSettings.edit();
 

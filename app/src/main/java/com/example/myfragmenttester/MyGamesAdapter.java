@@ -27,6 +27,8 @@ public class MyGamesAdapter extends ArrayAdapter<Game> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View rowView = inflater.inflate(R.layout.custom_my_games, null, true);
 
+
+
         Game rowGame = theGames.get(position);
 
         TextView redTeamName = rowView.findViewById(R.id.publicGameRedTeam);
