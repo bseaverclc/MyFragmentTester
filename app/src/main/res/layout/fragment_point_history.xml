@@ -22,6 +22,7 @@
        android:gravity="bottom"
        android:layout_weight="5"
        >
+
     <TextView
         android:id="@+id/redTeam"
         android:layout_width="0dp"

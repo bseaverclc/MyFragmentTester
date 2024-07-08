@@ -1,8 +1,10 @@
 package com.example.myfragmenttester;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +13,15 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -57,6 +62,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         mDatabase = FirebaseDatabase.getInstance().getReference();
         System.out.println("database reference : " + mDatabase);
         readGamesFromFirebase();
+
+        vibe = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE) ;
+        anim.setDuration(500);
         return v;
     }
 
@@ -109,6 +117,10 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
     //
     private DatabaseReference mDatabase;
+
+    Animation anim = new AlphaAnimation(0.5f, 1.0f);
+
+    Vibrator vibe;
     private int layout = 0;
     private LinearLayoutCompat statsHorizontalLayout, redStatsLayout, blueStatsLayout, redScorePanel, blueScorePanel, redPositiveAndScoreLayout, redPositiveLayout, bluePositiveAndScoreLayout, bluePositiveLayout;
     private EditText redTeamEditText, blueTeamEditText;
@@ -495,8 +507,33 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redKillButton.setOnClickListener(this);
         redAtkButton = (Button)(view.findViewById(R.id.redAttack));
         redAtkButton.setOnClickListener(this);
+
+        redAtkButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getRedAttack() > 0) {
+                    set.setRedAttack(set.getRedAttack() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         redDigButton = (Button)(view.findViewById(R.id.redDig));
         redDigButton.setOnClickListener(this);
+        redDigButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getRedDigs() > 0) {
+                    set.setRedDigs(set.getRedDigs() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         redOppAtkErrButton = (Button)(view.findViewById(R.id.redOppAttackErr));
         redOppAtkErrButton.setOnClickListener(this);
         redOppServeErrButton = (Button)(view.findViewById(R.id.redOppServeErr));
@@ -505,10 +542,46 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redOppOtherErrButton.setOnClickListener(this);
         redOneButton = (Button)(view.findViewById(R.id.redOne));
         redOneButton.setOnClickListener(this);
+        redOneButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getRedOne() > 0) {
+                    set.setRedOne(set.getRedOne() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         redTwoButton = (Button)(view.findViewById(R.id.redTwo));
         redTwoButton.setOnClickListener(this);
+        redTwoButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getRedTwo() > 0) {
+                    set.setRedTwo(set.getRedTwo() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         redThreeButton = (Button)(view.findViewById(R.id.redThree));
         redThreeButton.setOnClickListener(this);
+        redThreeButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getRedThree() > 0) {
+                    set.setRedThree(set.getRedThree() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
 
         blueScoreButton = (Button)(view.findViewById(R.id.blueScore));
         blueScoreButton.setOnClickListener(this);
@@ -520,8 +593,32 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         blueKillButton.setOnClickListener(this);
         blueAtkButton = (Button)(view.findViewById(R.id.blueAttack));
         blueAtkButton.setOnClickListener(this);
+        blueAtkButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getBlueAttack() > 0) {
+                    set.setBlueAttack(set.getBlueAttack() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         blueDigButton = (Button)(view.findViewById(R.id.blueDig));
         blueDigButton.setOnClickListener(this);
+        blueDigButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getBlueDigs() > 0) {
+                    set.setBlueDigs(set.getBlueDigs() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         blueOppAtkErrButton = (Button)(view.findViewById(R.id.blueOppAttackErr));
         blueOppAtkErrButton.setOnClickListener(this);
         blueOppServeErrButton = (Button)(view.findViewById(R.id.blueOppServeErr));
@@ -530,10 +627,46 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         blueOppOtherErrButton.setOnClickListener(this);
         blueOneButton = (Button)(view.findViewById(R.id.blueOne));
         blueOneButton.setOnClickListener(this);
+        blueOneButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getBlueOne() > 0) {
+                    set.setBlueOne(set.getBlueOne() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         blueTwoButton = (Button)(view.findViewById(R.id.blueTwo));
         blueTwoButton.setOnClickListener(this);
+        blueTwoButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getBlueTwo() > 0) {
+                    set.setBlueTwo(set.getBlueTwo() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
         blueThreeButton = (Button)(view.findViewById(R.id.blueThree));
         blueThreeButton.setOnClickListener(this);
+        blueThreeButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                System.out.println("Long Click");
+                if(set.getBlueThree() > 0) {
+                    set.setBlueThree(set.getBlueThree() - 1);
+                    updateScreen();
+                }
+                vibe.vibrate(100);
+                return true;
+            }
+        });
 
     }
 
@@ -1050,88 +1183,115 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
 
         if(id == R.id.redScore){
+            redScoreButton.startAnimation(anim);
             redScoreAction(v);
         }
         else if(id == R.id.redAce){
+
+             //You can manage the blinking time with this parameter
+            redAceButton.startAnimation(anim);
             redAceAction(v);
         }
         else if(id == R.id.redBlock){
+            redBlockButton.startAnimation(anim);
             redBlockAction(v);
         }
         else if(id == R.id.redKill){
+            redKillButton.startAnimation(anim);
             redKillAction(v);
         }
         else if(id == R.id.redOppAttackErr){
+            redOppAtkErrButton.startAnimation(anim);
             redOppAttackErrAction(v);
         }
         else if(id == R.id.redOppServeErr){
+            redOppServeErrButton.startAnimation(anim);
             redOppServeErrAction(v);
         }
         else if(id == R.id.redOppOtherErr){
+            redOppOtherErrButton.startAnimation(anim);
             redOppOtherErrAction(v);
         }
         else if(id == R.id.redAttack){
+            redAtkButton.startAnimation(anim);
             redAtkAction(v);
         }
         else if(id == R.id.redDig){
+            redDigButton.startAnimation(anim);
             redDigAction(v);
         }
 
         else if(id == R.id.redOne){
+            redOneButton.startAnimation(anim);
             redOneAction(v);
         }
         else if(id == R.id.redTwo){
+            redTwoButton.startAnimation(anim);
             redTwoAction(v);
         }
         else if(id == R.id.redThree){
+            redThreeButton.startAnimation(anim);
             redThreeAction(v);
         }
         // blue actions
 
         if(id == R.id.blueScore){
+            blueScoreButton.startAnimation(anim);
             blueScoreAction(v);
         }
         else if(id == R.id.blueAce){
+            blueAceButton.startAnimation(anim);
             blueAceAction(v);
         }
         else if(id == R.id.blueBlock){
+            blueBlockButton.startAnimation(anim);
             blueBlockAction(v);
         }
         else if(id == R.id.blueKill){
+            blueKillButton.startAnimation(anim);
             blueKillAction(v);
         }
         else if(id == R.id.blueOppAttackErr){
+            blueOppAtkErrButton.startAnimation(anim);
             blueOppAttackErrAction(v);
         }
         else if(id == R.id.blueOppServeErr){
+            blueOppServeErrButton.startAnimation(anim);
             blueOppServeErrAction(v);
         }
         else if(id == R.id.blueOppOtherErr){
+            blueOppOtherErrButton.startAnimation(anim);
             blueOppOtherErrAction(v);
         }
         else if(id == R.id.blueAttack){
+            blueAtkButton.startAnimation(anim);
             blueAtkAction(v);
         }
         else if(id == R.id.blueDig){
+            blueDigButton.startAnimation(anim);
             blueDigAction(v);
         }
 
         else if(id == R.id.blueOne){
+            blueOneButton.startAnimation(anim);
             blueOneAction(v);
         }
         else if(id == R.id.blueTwo){
+            blueTwoButton.startAnimation(anim);
             blueTwoAction(v);
         }
         else if(id == R.id.blueThree){
+            blueThreeButton.startAnimation(anim);
             blueThreeAction(v);
         }
         if (id == R.id.undoPoint) {
+            undoButton.startAnimation(anim);
             System.out.println("undo button pushed");
             undoAction();
         }
 
         if(id == R.id.switchSides){
-
+            switchSides.startAnimation(anim);
             if (layout == 0) {
                 statsHorizontalLayout.removeAllViews();
                 bluePositiveAndScoreLayout.removeAllViews();

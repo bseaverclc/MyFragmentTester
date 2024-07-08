@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PointHistoryFragment"
     android:windowSoftInputMode="adjustNothing"
+
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -203,6 +204,7 @@
                             android:autoSizeTextType="uniform"
                             android:maxLines="2"
                             android:padding="5dp"
+
                             />
 
                         <Button
@@ -694,6 +696,7 @@
                             android:layout_weight="33"
                             android:text="Ace\n0"
                             android:textColor="@color/black"
+                            android:backgroundTintMode="screen"
                             android:backgroundTint="@color/blue"
                             android:autoSizeTextType="uniform"
                             android:maxLines="2"
@@ -895,10 +898,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
                 android:layout_margin="5dp"
-                android:text="Switch\nSides
-"
+                android:text="Switch\nSides"
+
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
+
                 />
 
 
