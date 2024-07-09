@@ -885,18 +885,26 @@
                 android:id="@+id/undoPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="40"
                 android:layout_margin="5dp"
                 android:text="Undo\nLast Point"
                 android:paddingHorizontal="1dp"
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/black"
                 />
+            <TextView
+                android:id="@+id/visibilityTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:textAlignment="center"
+                android:text="Private\nGame"
+                />
             <Button
                 android:id="@+id/switchSides"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="50"
+                android:layout_weight="40"
                 android:layout_margin="5dp"
                 android:text="Switch\nSides"
 

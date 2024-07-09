@@ -49,6 +49,7 @@ public class Game implements Serializable {
     }
 
     public void setType(int newType){type = newType;}
+    public void setPublicGame(boolean vis){publicGame = vis;}
 
     private List<Integer> setWins = Arrays.asList(0, 0);
     private Date date;
@@ -216,7 +217,7 @@ public class Game implements Serializable {
               setDict.put("blueRotation", set.getBlueRotation());
               setDict.put("redRotationPlusMinus", set.getRedRotationPlusMinus());
               setDict.put("blueRotationPlusMinus", set.getBlueRotationPlusMinus());
-              setDict.put("pointHistory", set.getPointHistory());
+              //setDict.put("pointHistory", set.getPointHistory());
 
               setDict.put(("redAttack"), set.getRedAttack());
               setDict.put("redOne", set.getRedOne());

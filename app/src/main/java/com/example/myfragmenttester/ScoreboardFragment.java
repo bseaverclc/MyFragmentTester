@@ -127,6 +127,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private RadioButton set1,set2,set3,set4,set5;
 
     private Button undoButton, switchSides;
+    private TextView visibilityTextView;
     private Button publicGames;
 
     private Button redScoreButton;
@@ -467,7 +468,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         switchSides = view.findViewById(R.id.switchSides);
         switchSides.setOnClickListener(this);
 
-
+        visibilityTextView = view.findViewById(R.id.visibilityTextView);
 
 
 
@@ -739,6 +740,13 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         blueOneButton.setText("1SR\n" + set.getBlueOne());
         blueTwoButton.setText("2SR\n" + set.getBlueTwo());
         blueThreeButton.setText("3SR\n" + set.getBlueThree());
+
+        if(AppData.game.isPublicGame()) {
+            visibilityTextView.setText("Public\nGame");
+        }
+        else{
+            visibilityTextView.setText("Private\nGame");
+        }
 
         updatePercents();
        // AppData.game.updateFirebase();
@@ -1291,6 +1299,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         }
 
         if(id == R.id.switchSides){
+
             switchSides.startAnimation(anim);
             if (layout == 0) {
                 statsHorizontalLayout.removeAllViews();

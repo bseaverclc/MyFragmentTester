@@ -120,7 +120,13 @@ public class MainActivity extends AppCompatActivity implements
         }
         int id = item.getItemId();
         if(id == R.id.saveButton){
-            writeJson2("myGames2");
+            if(AppData.game.isPublicGame()){
+                AppData.game.saveGameToFirebase();
+            }
+            else{
+                writeJson2("myGames2");
+            }
+
         }
         if(id == R.id.newButton){
             tabLayout.getTabAt(0).select();

@@ -35,13 +35,11 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         publicButton = findViewById(R.id.publicButton);
         privateButton = findViewById(R.id.privateButton);
 
-
-
-        if(AppData.game.getUid().equals("")) {
-            privateButton.toggle();
+        if(AppData.game.isPublicGame()) {
+            publicButton.toggle();
         }
         else{
-            publicButton.toggle();
+            privateButton.toggle();
         }
 
 
@@ -50,12 +48,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.publicButton){
-                    System.out.println("clicked public button");
-                    System.out.println("Going to save to firebase eventually");
-
+                    AppData.game.setPublicGame(true);
                 }
                 if(checkedId == R.id.privateButton){
-                    System.out.println("clicked private button");
+                    AppData.game.setPublicGame(false);
                 }
             }
         });
