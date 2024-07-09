@@ -702,6 +702,15 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
     public void updateScreen(){
         System.out.println("updateScreen");
+        if(AppData.canEdit && AppData.game.isPublicGame()){
+            if(AppData.game.getUid().equals("")) {
+                AppData.game.saveGameToFirebase();
+            }
+            else{
+                AppData.game.updateFirebase();
+            }
+        }
+
        redTeamEditText.setText(AppData.game.getTeams().get(0));
        blueTeamEditText.setText(AppData.game.getTeams().get(1));
         if(set.getServe().equals("red") && set.getPointHistory().size()!=0) {

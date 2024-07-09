@@ -284,7 +284,7 @@ public class Game implements Serializable {
                 setDict.put("blueRotation", set.getBlueRotation());
                 setDict.put("redRotationPlusMinus", set.getRedRotationPlusMinus());
                 setDict.put("blueRotationPlusMinus", set.getBlueRotationPlusMinus());
-                setDict.put("pointHistory", set.getPointHistory());
+                //setDict.put("pointHistory", set.getPointHistory());
 
                 setDict.put(("redAttack"), set.getRedAttack());
                 setDict.put("redOne", set.getRedOne());

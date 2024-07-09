@@ -42,6 +42,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             privateButton.toggle();
         }
 
+        if(!AppData.canEdit){
+            publicButton.setEnabled(false);
+            privateButton.setEnabled(false);
+        }
+        else{
+            publicButton.setEnabled(true);
+            privateButton.setEnabled(true);
+        }
+
 
 
         publicPrivateGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -65,6 +74,15 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
         else{
             advancedButton.toggle();
+        }
+
+        if(!AppData.canEdit){
+            simpleButton.setEnabled(false);
+            advancedButton.setEnabled(false);
+        }
+        else{
+            simpleButton.setEnabled(true);
+            advancedButton.setEnabled(true);
         }
 
         statsModeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -213,73 +231,75 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         }
 
         // clicked on a red rotation
-        if(id == R.id.redRot1 || id == R.id.redRot2 || id == R.id.redRot3 || id == R.id.redRot4 || id == R.id.redRot5|| id == R.id.redRot6) {
-            redRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            redRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            redRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            redRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            redRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            redRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            if (id == R.id.redRot1){
-                redRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(0);
-            }
-            if (id == R.id.redRot2){
-                redRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(1);
-            }
-            if (id == R.id.redRot3){
-                redRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(2);
-            }
-            if (id == R.id.redRot4){
-                redRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(3);
-            }
-            if (id == R.id.redRot5){
-                redRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(4);
-            }
-            if (id == R.id.redRot6){
-                redRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                redRotationChange(5);
+        if(AppData.canEdit) {
+            if (id == R.id.redRot1 || id == R.id.redRot2 || id == R.id.redRot3 || id == R.id.redRot4 || id == R.id.redRot5 || id == R.id.redRot6) {
+                redRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                redRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                redRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                redRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                redRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                redRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                if (id == R.id.redRot1) {
+                    redRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(0);
+                }
+                if (id == R.id.redRot2) {
+                    redRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(1);
+                }
+                if (id == R.id.redRot3) {
+                    redRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(2);
+                }
+                if (id == R.id.redRot4) {
+                    redRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(3);
+                }
+                if (id == R.id.redRot5) {
+                    redRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(4);
+                }
+                if (id == R.id.redRot6) {
+                    redRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    redRotationChange(5);
+                }
+
             }
 
-        }
+            // clicked on a blue rotation
+            if (id == R.id.blueRot1 || id == R.id.blueRot2 || id == R.id.blueRot3 || id == R.id.blueRot4 || id == R.id.blueRot5 || id == R.id.blueRot6) {
+                blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_off));
+                if (id == R.id.blueRot1) {
+                    blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(0);
+                }
+                if (id == R.id.blueRot2) {
+                    blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(1);
+                }
+                if (id == R.id.blueRot3) {
+                    blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(2);
+                }
+                if (id == R.id.blueRot4) {
+                    blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(3);
+                }
+                if (id == R.id.blueRot5) {
+                    blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(4);
+                }
+                if (id == R.id.blueRot6) {
+                    blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(), R.drawable.radio_on));
+                    blueRotationChange(5);
+                }
 
-        // clicked on a blue rotation
-        if(id == R.id.blueRot1 || id == R.id.blueRot2 || id == R.id.blueRot3 || id == R.id.blueRot4 || id == R.id.blueRot5|| id == R.id.blueRot6) {
-            blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_off));
-            if (id == R.id.blueRot1){
-                blueRot1.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(0);
             }
-            if (id == R.id.blueRot2){
-                blueRot2.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(1);
-            }
-            if (id == R.id.blueRot3){
-                blueRot3.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(2);
-            }
-            if (id == R.id.blueRot4){
-                blueRot4.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(3);
-            }
-            if (id == R.id.blueRot5){
-                blueRot5.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(4);
-            }
-            if (id == R.id.blueRot6){
-                blueRot6.setBackground(ContextCompat.getDrawable(this.getApplicationContext(),R.drawable.radio_on));
-                blueRotationChange(5);
-            }
-
         }
     }
 
