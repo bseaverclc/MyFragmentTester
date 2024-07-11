@@ -31,6 +31,14 @@ public class PublicGames extends AppCompatActivity {
 //        eventPosition = 0;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PublicGamesAdapter adapter=new PublicGamesAdapter(this, AppData.publicGames);
+        listView=(ListView)findViewById(R.id.publicGamesListView);
+        listView.setAdapter(adapter);
+    }
+
     public void attachListener(){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 

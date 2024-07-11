@@ -3,6 +3,7 @@ package com.example.myfragmenttester;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,10 +17,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -32,6 +40,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
@@ -42,16 +51,26 @@ public class MainActivity extends AppCompatActivity implements
     Gson mGson = gsonb.create();
 
     TabLayout tabLayout;
+    TabItem homeTab;
     ViewPager2 viewPager2;
     MyViewPageAdapter myViewPageAdapter;
+
+    boolean first = true;
 
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
     public NavigationView navigationView;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        System.out.println("database reference : " + mDatabase);
+        readGamesFromFirebase();
+
+        //clearJSON2("myGames2");
         AppData.myGames = readJSON2("myGames2");
 
         setContentView(R.layout.activity_main);
@@ -80,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         tabLayout = findViewById(R.id.tab_layout);
+        homeTab = findViewById(R.id.HomeTab);
         viewPager2 = findViewById(R.id.view_pager);
         myViewPageAdapter = new MyViewPageAdapter(this);
         viewPager2.setAdapter(myViewPageAdapter);
@@ -88,6 +108,10 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager2.setCurrentItem(tab.getPosition());
+                if(tab.getPosition()>0){
+                    ((LinearLayout) tabLayout.getTabAt(0).view).setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -106,6 +130,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(!first) {
+            tabLayout.getTabAt(1).select();
+        }
+        first = false;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.optionsmenu, menu);
         return true;
@@ -120,11 +153,12 @@ public class MainActivity extends AppCompatActivity implements
         }
         int id = item.getItemId();
         if(id == R.id.saveButton){
-            if(AppData.game.isPublicGame()){
-                AppData.game.saveGameToFirebase();
-            }
-            else{
-                writeJson2("myGames2");
+            if(AppData.canEdit) {
+                if (AppData.game != null && AppData.game.isPublicGame()) {
+
+                } else {
+                    writeJson2("myGames2");
+                }
             }
 
         }
@@ -229,10 +263,10 @@ public class MainActivity extends AppCompatActivity implements
 
 
         Wrapper wrapper = new Wrapper();
-        if (!AppData.savedOnce) {
-            AppData.myGames.add(AppData.game);
-            AppData.savedOnce = true;
-        }
+//        if (!AppData.savedOnce && AppData.game != null) {
+//            AppData.myGames.add(AppData.game);
+//            AppData.savedOnce = true;
+//        }
         wrapper.setDataList(AppData.myGames);
 
         try {
@@ -253,7 +287,221 @@ public class MainActivity extends AppCompatActivity implements
         SharedPreferences mSettings = getSharedPreferences("YourPreferenceName", Context.MODE_PRIVATE);
 
         String loadValue = mSettings.getString(yourSettingName, "");
-        Wrapper w = mGson.fromJson(loadValue, Wrapper.class);
-        return w.dataList;
+
+            Wrapper w = mGson.fromJson(loadValue, Wrapper.class);
+           if(w!= null){
+            return w.dataList;
+            }
+            else{
+            return new ArrayList<Game>();
+        }
+    }
+
+    public void clearJSON2(String yourSettingName){
+        SharedPreferences mSettings = getSharedPreferences("YourPreferenceName", Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSettings.edit();
+
+
+           // String writeValue = mGson.toJson(wrapper);
+            mEditor.putString(yourSettingName, "");
+            mEditor.commit();
+           // return true;
+
+    }
+
+    private void readGamesFromFirebase(){
+        System.out.println("In Read Games from firebase");
+        mDatabase.child("games").addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                System.out.println("heard game added on firebase");
+                String key = snapshot.getKey();
+
+
+                Map<String, Object> theMap = (Map<String, Object>) snapshot.getValue();
+                //System.out.println(key);
+                Game aGame = new Game(key, theMap);
+
+
+                // trying to get everything from the game in one place
+//                Map<String, Object> theMapSets = (Map<String, Object>) theMap.get("sets");
+//                for (String blah : theMapSets.keySet()) {
+//                    ASet theSet = new ASet(blah, (Map<String, Object>)(theMapSets.get(blah)));
+//
+//                    Map<String, Object> theMapPoints = (Map<String, Object>)((Map<String, Object>)theMapSets.get(blah)).get("pointHistory");
+//                    if(theMapPoints != null) {
+//                        for (String blah2 : theMapPoints.keySet()) {
+//                            theSet.addPoint(blah2, (Map<String, Object>) theMapPoints.get(blah2));
+//                        }
+//                    }
+//                    aGame.addSet(theSet);
+//
+//                }
+
+
+
+                mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot2, @Nullable String previousChildName) {
+                        System.out.println("heard set added on firebase");
+                        ASet aSet = new ASet(snapshot2.getKey(), (Map<String, Object>)snapshot2.getValue());
+                        aGame.addSet(aSet);
+
+                        mDatabase.child("games").child(key).child("sets").child(snapshot2.getKey()).child("pointHistory").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
+                                System.out.println("heard Point added on firebase");
+                                if(aSet.getPointHistory() != null) {
+                                    for (Point p : aSet.getPointHistory()) {
+                                        if (p.getUid() == snapshot3.getKey()) {
+                                            return;
+                                        }
+                                    }
+                                }
+                                aSet.addPoint(snapshot3.getKey(), (Map <String,Object>) snapshot3.getValue());
+                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                System.out.println("heard a point change");
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                String pKey = snapshot.getKey();
+                                if(AppData.game != null && AppData.game.getUid().equals(aGame.getUid()) && AppData.canEdit){
+                                    // I made the change, so do nothing
+                                    return;
+                                }
+                                for(int i = aSet.getPointHistory().size() -1; i >=0; i--){
+                                    if(aSet.getPointHistory().get(i).getUid().equals(pKey)){
+                                        aSet.getPointHistory().remove(i);
+                                        System.out.println("heard point removed");
+                                        //updateScreen();
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        // set changed
+                        String setKey = snapshot.getKey();
+//                        if(AppData.game != null && AppData.game.getUid().equals(aGame.getUid()) && AppData.canEdit){
+//                            // I made the change to the set, so do nothing
+//                            return;
+//                        }
+                        for(ASet s: aGame.getSets()){
+                            if(s.getUid().equals(setKey)){
+                                s.updateSet((Map<String, Object>)snapshot.getValue());
+                                System.out.println("heard a set change");
+                                if(AppData.game != null && AppData.game.getUid().equals(aGame.getUid())){
+                                    if(ScoreboardFragment.scoreboardFragment != null) {
+                                        ScoreboardFragment.scoreboardFragment.updateScreen();
+                                    }
+                                }
+//                                Intent intent = new Intent();
+//                                intent.setAction("setUpdated");
+//                                getContext().sendBroadcast(intent);
+                            }
+                        }
+                        // ASet aSet = new ASet(setKey, (Map<String, Object>)snapshot.getValue());
+
+//                        mDatabase.child("games").child(key).child("sets").child(setKey).child("pointHistory").addChildEventListener(new ChildEventListener() {
+//                            @Override
+//                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
+//                                System.out.println("Adding points to changed set");
+//                                if (aSet.getPointHistory() != null) {
+//                                    if (AppData.game.getUid().equals())
+//                                }
+//                                for (Point p : aSet.getPointHistory()) {
+//                                    if (p.getUid() == snapshot3.getKey()) {
+//                                        return;
+//                                    }
+//                                }
+//
+//                                aSet.addPoint(snapshot3.getKey(), (Map<String, Object>) snapshot3.getValue());
+//                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
+//                            }
+//                            });
+
+
+                        //aGame.addSet(aSet);
+
+
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                AppData.publicGames.add(aGame);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+
+                String key = snapshot.getKey();
+//                if(AppData.game != null && AppData.game.getUid().equals(key) && AppData.canEdit){
+//                    // I made the change, so do nothing
+//                    return;
+//                }
+//                else{
+                for(Game g: AppData.publicGames){
+                    if(g.getUid().equals(key)){
+                        g.updateGame((Map<String,Object>)snapshot.getValue());
+                        System.out.println("Heard a game change");
+                        break;
+                    }
+                }
+                //}
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

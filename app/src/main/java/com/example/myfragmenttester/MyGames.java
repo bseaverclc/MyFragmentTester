@@ -83,10 +83,10 @@ public class MyGames extends AppCompatActivity {
 
 
         Wrapper wrapper = new Wrapper();
-        if (!AppData.savedOnce) {
-            AppData.myGames.add(AppData.game);
-            AppData.savedOnce = true;
-        }
+//        if (!AppData.savedOnce) {
+//            AppData.myGames.add(AppData.game);
+//            AppData.savedOnce = true;
+//        }
         wrapper.setDataList(AppData.myGames);
 
         try {

@@ -49,19 +49,21 @@ import java.util.Map;
  */
 public class ScoreboardFragment extends Fragment implements View.OnClickListener {
 
+    public static ScoreboardFragment scoreboardFragment = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
+        scoreboardFragment = this;
         createButtons(v);
         createEditTexts(v);
-        createGame();
+        if(AppData.game == null) {
+            createGame();
+        }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        System.out.println("database reference : " + mDatabase);
-        readGamesFromFirebase();
+
 
         vibe = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE) ;
         anim.setDuration(500);
@@ -70,8 +72,10 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onResume() {
+        System.out.println("On Resume from Scoreboard Fragment");
         super.onResume();
         if(AppData.gameChanged) {
+            AppData.gameChanged = false;
             set = AppData.game.getSets().get(0);
             set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
             set2.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
@@ -80,9 +84,21 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             set5.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_off));
             set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(), R.drawable.radio_on));
             AppData.selectedSet = 0;
-            AppData.gameChanged = false;
+
             AppData.canEdit = false;
+            if(!AppData.game.isPublicGame()) {
+                AppData.canEdit = true;
+            }
+            else{
+                for(Game g: AppData.myGames){
+                    if(g.getUid() == AppData.game.getUid()){
+                        AppData.canEdit = true;
+                        break;
+                    }
+                }
+            }
         }
+
         if(!AppData.canEdit){
             redTeamEditText.setEnabled(false);
             blueTeamEditText.setEnabled(false);
@@ -91,6 +107,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
             redTeamEditText.setEnabled(true);
             blueTeamEditText.setEnabled(true);
         }
+
+
         updateScreen();
         updateBackgroundColors();
     }
@@ -116,7 +134,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     //
-    private DatabaseReference mDatabase;
+
 
     Animation anim = new AlphaAnimation(0.5f, 1.0f);
 
@@ -171,191 +189,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private ASet set;
     private int setNum = 0;
 
-    private void readGamesFromFirebase(){
-        System.out.println("In Read Games from firebase");
-        mDatabase.child("games").addChildEventListener(new ChildEventListener() {
 
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                System.out.println("heard game added on firebase");
-                String key = snapshot.getKey();
-
-
-                Map<String, Object> theMap = (Map<String, Object>) snapshot.getValue();
-                //System.out.println(key);
-                Game aGame = new Game(key, theMap);
-
-
-                // trying to get everything from the game in one place
-//                Map<String, Object> theMapSets = (Map<String, Object>) theMap.get("sets");
-//                for (String blah : theMapSets.keySet()) {
-//                    ASet theSet = new ASet(blah, (Map<String, Object>)(theMapSets.get(blah)));
-//
-//                    Map<String, Object> theMapPoints = (Map<String, Object>)((Map<String, Object>)theMapSets.get(blah)).get("pointHistory");
-//                    if(theMapPoints != null) {
-//                        for (String blah2 : theMapPoints.keySet()) {
-//                            theSet.addPoint(blah2, (Map<String, Object>) theMapPoints.get(blah2));
-//                        }
-//                    }
-//                    aGame.addSet(theSet);
-//
-//                }
-
-
-
-                mDatabase.child("games").child(key).child("sets").addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot2, @Nullable String previousChildName) {
-                        System.out.println("heard set added on firebase");
-                        ASet aSet = new ASet(snapshot2.getKey(), (Map<String, Object>)snapshot2.getValue());
-                        aGame.addSet(aSet);
-
-                        mDatabase.child("games").child(key).child("sets").child(snapshot2.getKey()).child("pointHistory").addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
-                                System.out.println("heard Point added on firebase");
-                                if(aSet.getPointHistory() != null) {
-                                    for (Point p : aSet.getPointHistory()) {
-                                        if (p.getUid() == snapshot3.getKey()) {
-                                            return;
-                                        }
-                                    }
-                                }
-                                aSet.addPoint(snapshot3.getKey(), (Map <String,Object>) snapshot3.getValue());
-                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
-                            }
-
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                System.out.println("heard a point change");
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                                String pKey = snapshot.getKey();
-                                for(int i = aSet.getPointHistory().size() -1; i >=0; i--){
-                                    if(aSet.getPointHistory().get(i).getUid().equals(pKey)){
-                                        aSet.getPointHistory().remove(i);
-                                        System.out.println("heard point removed");
-                                        //updateScreen();
-                                        break;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        String setKey = snapshot.getKey();
-                        for(ASet s: aGame.getSets()){
-                            if(s.getUid().equals(setKey)){
-                                s.updateSet((Map<String, Object>)snapshot.getValue());
-                                System.out.println("heard a set change");
-                                if(AppData.game.getUid().equals(aGame.getUid())){
-                                    updateScreen();
-                                }
-//                                Intent intent = new Intent();
-//                                intent.setAction("setUpdated");
-//                                getContext().sendBroadcast(intent);
-                            }
-                        }
-                       // ASet aSet = new ASet(setKey, (Map<String, Object>)snapshot.getValue());
-
-//                        mDatabase.child("games").child(key).child("sets").child(setKey).child("pointHistory").addChildEventListener(new ChildEventListener() {
-//                            @Override
-//                            public void onChildAdded(@NonNull DataSnapshot snapshot3, @Nullable String previousChildName) {
-//                                System.out.println("Adding points to changed set");
-//                                if (aSet.getPointHistory() != null) {
-//                                    if (AppData.game.getUid().equals())
-//                                }
-//                                for (Point p : aSet.getPointHistory()) {
-//                                    if (p.getUid() == snapshot3.getKey()) {
-//                                        return;
-//                                    }
-//                                }
-//
-//                                aSet.addPoint(snapshot3.getKey(), (Map<String, Object>) snapshot3.getValue());
-//                                System.out.println("aSet redPoints: " + aSet.getRedStats().get("redScore"));
-//                            }
-//                            });
-
-
-                        //aGame.addSet(aSet);
-
-
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-                AppData.publicGames.add(aGame);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-
-                String key = snapshot.getKey();
-                if(AppData.game.getUid().equals(key) && AppData.canEdit){
-                    // I made the change, so do nothing
-                    return;
-                }
-                else{
-                    for(Game g: AppData.publicGames){
-                        if(g.getUid().equals(key)){
-                            g.updateGame((Map<String,Object>)snapshot.getValue());
-                            System.out.println("Heard a game change");
-                            break;
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
 
     private void createEditTexts(View view) {
@@ -398,6 +232,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                    // redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
                     AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
+                    updateScreen();
                     return false;
                 }
                 return false;
@@ -685,12 +520,16 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         set = AppData.game.getSets().get(0);
         set1.setBackground(ContextCompat.getDrawable(getActivity().getApplicationContext(),R.drawable.radio_on));
         AppData.selectedSet = 0;
-        updateScreen();
+        AppData.game.setPublicGame(false);
+
         setNum = 1;
         AppData.canEdit = true;
         redTeamEditText.setEnabled(true);
         redTeamEditText.setEnabled(true);
 
+        AppData.myGames.add(AppData.game);
+
+        updateScreen();
 
 //        self.setSegmentedControlOutlet.selectedSegmentIndex = 0
 //        AppData.canEdit = true
@@ -703,12 +542,10 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     public void updateScreen(){
         System.out.println("updateScreen");
         if(AppData.canEdit && AppData.game.isPublicGame()){
-            if(AppData.game.getUid().equals("")) {
-                AppData.game.saveGameToFirebase();
-            }
-            else{
                 AppData.game.updateFirebase();
-            }
+        }
+        if(AppData.canEdit){
+            ((MainActivity)getActivity()).writeJson2("myGames2");
         }
 
        redTeamEditText.setText(AppData.game.getTeams().get(0));

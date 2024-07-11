@@ -7,6 +7,7 @@
     tools:context=".PointHistoryFragment"
     android:windowSoftInputMode="adjustNothing"
 
+
     >
 
     <!-- TODO: Update blank fragment layout -->

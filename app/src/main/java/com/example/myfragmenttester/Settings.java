@@ -57,10 +57,18 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.publicButton){
+                    System.out.println("Public button pressed");
                     AppData.game.setPublicGame(true);
+                    AppData.game.saveGameToFirebase();
+                    //AppData.publicGames.add(AppData.game);
+
                 }
                 if(checkedId == R.id.privateButton){
+                    System.out.println("Private button pressed");
                     AppData.game.setPublicGame(false);
+                    AppData.game.deleteFromFirebase();
+                   // AppData.game.setUid("");
+
                 }
             }
         });

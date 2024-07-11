@@ -51,6 +51,10 @@ public class Game implements Serializable {
     public void setType(int newType){type = newType;}
     public void setPublicGame(boolean vis){publicGame = vis;}
 
+    public void setUid(String u){
+        uid = u;
+    }
+
     private List<Integer> setWins = Arrays.asList(0, 0);
     private Date date;
     private ArrayList<ASet> sets;
@@ -324,7 +328,13 @@ public class Game implements Serializable {
     }
 
 
+    public void deleteFromFirebase(){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("games").child(uid);
+        if(ref != null){
+            ref.removeValue();
+        }
 
+    }
 
 
 
