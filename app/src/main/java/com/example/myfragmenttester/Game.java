@@ -258,6 +258,7 @@ public class Game implements Serializable {
 
 
     public void updateFirebase() {
+        System.out.println("Calling updateFirebase from Game class");
         if(uid != null && uid.length()!=0){
         SimpleDateFormat formatter1 = new SimpleDateFormat();
         formatter1.applyPattern("MM/dd/yy");

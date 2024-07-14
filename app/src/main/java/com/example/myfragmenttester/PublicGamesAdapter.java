@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class PublicGamesAdapter extends ArrayAdapter<Game> {
 
     private ArrayList<Game> theGames;
+    public static PublicGamesAdapter publicGamesAdapter;
 
 
     public PublicGamesAdapter(@NonNull Context context, ArrayList<Game> games) {
         super(context, R.layout.custom_publicgames, games);
+        publicGamesAdapter = this;
         theGames = games;
     }
 

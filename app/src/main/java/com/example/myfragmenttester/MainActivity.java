@@ -10,7 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements
     TabItem homeTab;
     ViewPager2 viewPager2;
     MyViewPageAdapter myViewPageAdapter;
+
+    Menu menu;
 
     boolean first = true;
 
@@ -111,6 +115,15 @@ public class MainActivity extends AppCompatActivity implements
                 if(tab.getPosition()>0){
                     ((LinearLayout) tabLayout.getTabAt(0).view).setVisibility(View.GONE);
                 }
+                if(tab.getPosition() == 1){
+                    getSupportActionBar().setTitle("Scoreboard");
+                }
+                if(tab.getPosition() == 2){
+                    getSupportActionBar().setTitle("Game Stats");
+                }
+                if(tab.getPosition() == 3){
+                    getSupportActionBar().setTitle("Point History");
+                }
 
             }
 
@@ -129,9 +142,25 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    public void hideTabBar(){
+        //tabLayout.setVisibility(View.GONE);
+        ((LinearLayout) tabLayout.getTabAt(1).view).setVisibility(View.GONE);
+        ((LinearLayout) tabLayout.getTabAt(2).view).setVisibility(View.GONE);
+        ((LinearLayout) tabLayout.getTabAt(3).view).setVisibility(View.GONE);
+    }
+    public void showTabBar(){
+        //tabLayout.setVisibility(View.VISIBLE);
+        ((LinearLayout) tabLayout.getTabAt(0).view).setVisibility(View.GONE);
+        ((LinearLayout) tabLayout.getTabAt(1).view).setVisibility(View.VISIBLE);
+        ((LinearLayout) tabLayout.getTabAt(2).view).setVisibility(View.VISIBLE);
+        ((LinearLayout) tabLayout.getTabAt(3).view).setVisibility(View.VISIBLE);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
+        // always start on scoreboard screen after opening screen has been shown
         if(!first) {
             tabLayout.getTabAt(1).select();
         }
@@ -141,6 +170,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.optionsmenu, menu);
+        this.menu = menu;
+        menu.findItem(R.id.settingsButton).setVisible(false);
+        menu.findItem(R.id.saveButton).setVisible(false);
         return true;
     }
 
@@ -163,13 +195,52 @@ public class MainActivity extends AppCompatActivity implements
 
         }
         if(id == R.id.newButton){
-            tabLayout.getTabAt(0).select();
-            viewPager2.setCurrentItem(0);
-          //  (ScoreboardFragment)(viewPager2.getFocusedChild()).create
-        Fragment x = getSupportFragmentManager().findFragmentByTag("f0");
-        ScoreboardFragment y = (ScoreboardFragment) x;
-        AppData.savedOnce = false;
-        y.createGame();
+            AlertDialog.Builder newGameAlert = new AlertDialog.Builder(this);
+            newGameAlert.setTitle("Are you sure you want to create a new game?");
+            newGameAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                    tabLayout.getTabAt(1).select();
+                    Fragment x = getSupportFragmentManager().findFragmentByTag("f1");
+                    ScoreboardFragment y = (ScoreboardFragment) x;
+                    AppData.savedOnce = false;
+                    // if not first time to scoreboard screen
+                    if (y != null) {
+                        y.createGame();
+                    }
+                }
+            });
+
+            newGameAlert.setNegativeButton("No", null);
+            newGameAlert.show();
+
+        }
+
+        if (id == R.id.settingsButton) {
+            // DO your stuff
+//            Game readGame = readJSON("myGames");
+//            if (readGame!=null) {
+//                System.out.println("Read a team from phone " + readGame.getSets().get(0).getPointHistory().size());
+//            }
+//            else{
+//                System.out.println("Read a null from phone");
+//            }
+
+
+//            System.out.println("myGames size:  " + AppData.myGames.size());
+//            for(Game pg: AppData.myGames){
+//                System.out.println("Red Team " + pg.getTeams().get(0));
+//                System.out.println("myGames size:  " + AppData.myGames.size());
+//            }
+
+            System.out.println("settings clicked");
+
+            Intent intent = new Intent(this, Settings.class);
+            //intent.putExtra("meet", meet);
+            startActivity(intent);
+            //drawerLayout.closeDrawers();
         }
 
         return super.onOptionsItemSelected(item);
@@ -202,30 +273,7 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(intent);
             drawerLayout.closeDrawers();
         }
-        if (id == R.id.settings) {
-            // DO your stuff
-//            Game readGame = readJSON("myGames");
-//            if (readGame!=null) {
-//                System.out.println("Read a team from phone " + readGame.getSets().get(0).getPointHistory().size());
-//            }
-//            else{
-//                System.out.println("Read a null from phone");
-//            }
 
-
-            System.out.println("myGames size:  " + AppData.myGames.size());
-            for(Game pg: AppData.myGames){
-                System.out.println("Red Team " + pg.getTeams().get(0));
-                System.out.println("myGames size:  " + AppData.myGames.size());
-            }
-
-            System.out.println("settings clicked");
-
-            Intent intent = new Intent(this, Settings.class);
-            //intent.putExtra("meet", meet);
-            startActivity(intent);
-            drawerLayout.closeDrawers();
-        }
 
         return true;
     }
@@ -364,8 +412,19 @@ public class MainActivity extends AppCompatActivity implements
                             }
 
                             @Override
-                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                System.out.println("heard a point change");
+                            public void onChildChanged(@NonNull DataSnapshot snapshot4, @Nullable String previousChildName) {
+
+
+                                for(Point p: aSet.getPointHistory()) {
+                                    if (p.getUid().equals(snapshot4.getKey())) {
+                                        p.updatePoint((Map<String,Object>)snapshot4.getValue());
+                                        System.out.println("heard a point change");
+                                        break;
+                                    }
+                                }
+
+
+
                             }
 
                             @Override
@@ -410,12 +469,17 @@ public class MainActivity extends AppCompatActivity implements
                         for(ASet s: aGame.getSets()){
                             if(s.getUid().equals(setKey)){
                                 s.updateSet((Map<String, Object>)snapshot.getValue());
+
                                 System.out.println("heard a set change");
-                                if(AppData.game != null && AppData.game.getUid().equals(aGame.getUid())){
-                                    if(ScoreboardFragment.scoreboardFragment != null) {
-                                        ScoreboardFragment.scoreboardFragment.updateScreen();
-                                    }
-                                }
+//                                if(AppData.game != null && AppData.game.getUid().equals(aGame.getUid())){
+//                                    if(ScoreboardFragment.scoreboardFragment != null) {
+//                                        ScoreboardFragment.scoreboardFragment.updateScreen();
+//                                    }
+//
+//                                }
+//                                if(PublicGamesAdapter.publicGamesAdapter != null){
+//                                    PublicGamesAdapter.publicGamesAdapter.notifyDataSetChanged();
+//                                }
 //                                Intent intent = new Intent();
 //                                intent.setAction("setUpdated");
 //                                getContext().sendBroadcast(intent);
@@ -472,19 +536,30 @@ public class MainActivity extends AppCompatActivity implements
 
 
                 String key = snapshot.getKey();
-//                if(AppData.game != null && AppData.game.getUid().equals(key) && AppData.canEdit){
-//                    // I made the change, so do nothing
-//                    return;
-//                }
-//                else{
+                if(AppData.game != null && AppData.game.getUid().equals(key) && AppData.canEdit){
+                    // I made the change, so do nothing
+                    return;
+                }
+                else{
                 for(Game g: AppData.publicGames){
                     if(g.getUid().equals(key)){
                         g.updateGame((Map<String,Object>)snapshot.getValue());
                         System.out.println("Heard a game change");
+                        //If I'm on the scoreboard screen and on this game, refresh the screen
+                        if(AppData.game != null && AppData.game.getUid().equals(g.getUid())){
+                            if(ScoreboardFragment.scoreboardFragment != null) {
+                                ScoreboardFragment.scoreboardFragment.updateScreen();
+                            }
+
+                        }
+                        //If I am on the public games screen, refresh the screen
+                        if(PublicGamesAdapter.publicGamesAdapter != null){
+                            PublicGamesAdapter.publicGamesAdapter.notifyDataSetChanged();
+                        }
                         break;
                     }
                 }
-                //}
+                }
 
             }
 

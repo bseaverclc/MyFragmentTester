@@ -66,6 +66,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 if(checkedId == R.id.privateButton){
                     System.out.println("Private button pressed");
                     AppData.game.setPublicGame(false);
+                    for(Game g: AppData.publicGames){
+                        if(g.getUid().equals(AppData.game.getUid())){
+                            AppData.publicGames.remove(g);
+                            break;
+                        }
+                    }
                     AppData.game.deleteFromFirebase();
                    // AppData.game.setUid("");
 

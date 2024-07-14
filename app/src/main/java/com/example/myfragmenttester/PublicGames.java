@@ -46,6 +46,11 @@ public class PublicGames extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("clicked on a public game");
                 AppData.game = AppData.publicGames.get(position);
+                for (Game g: AppData.myGames){
+                    if(AppData.publicGames.get(position).getUid().equals(g.getUid())){
+                        AppData.game = g;
+                    }
+                }
                 AppData.gameChanged = true;
                 finish();
 

@@ -1,6 +1,8 @@
 package com.example.myfragmenttester;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,6 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -40,6 +44,25 @@ public class MyGames extends AppCompatActivity {
 //        eventPosition = 0;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.optionsmenu, menu);
+       // this.menu = menu;
+        menu.findItem(R.id.settingsButton).setVisible(false);
+        menu.findItem(R.id.saveButton).setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.newButton){
+            AppData.game = null;
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void attachListener(){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -62,9 +85,28 @@ public class MyGames extends AppCompatActivity {
                 firstServeAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //If I remove the game I currently have in the scoreboard
+                        if(AppData.myGames.get(position) == AppData.game){
+                            AppData.game = null;
+                        }
+
+                        if(AppData.myGames.get(position).isPublicGame()){
+                            // remove from AppData.publicGames on this device
+                            for(int i = 0; i<AppData.publicGames.size(); i++){
+                                if(AppData.publicGames.get(i).getUid().equals(AppData.myGames.get(position).getUid())){
+                                    System.out.println("removed from public games");
+                                    AppData.publicGames.remove(i);
+                                    break;
+                                }
+                            }
+                            // remove the game from firebase
+                            AppData.myGames.get(position).deleteFromFirebase();
+                        }
+                        // remove the game from myGames on this device
                         AppData.myGames.remove(position);
                         adapter.notifyDataSetChanged();
                         writeJson2("myGames2");
+
 
                     }
                 });

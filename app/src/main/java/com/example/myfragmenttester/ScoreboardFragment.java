@@ -57,6 +57,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
         scoreboardFragment = this;
+        ((MainActivity)getActivity()).showTabBar();
+        ((MainActivity)getActivity()).menu.findItem(R.id.settingsButton).setVisible(true);
         createButtons(v);
         createEditTexts(v);
         if(AppData.game == null) {
@@ -74,6 +76,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     public void onResume() {
         System.out.println("On Resume from Scoreboard Fragment");
         super.onResume();
+        if(AppData.game == null) {
+            createGame();
+        }
         if(AppData.gameChanged) {
             AppData.gameChanged = false;
             set = AppData.game.getSets().get(0);
@@ -589,9 +594,11 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
         if(AppData.game.isPublicGame()) {
             visibilityTextView.setText("Public\nGame");
+            visibilityTextView.setBackgroundColor(Color.GREEN);
         }
         else{
             visibilityTextView.setText("Private\nGame");
+            visibilityTextView.setBackgroundColor(Color.YELLOW);
         }
 
         updatePercents();

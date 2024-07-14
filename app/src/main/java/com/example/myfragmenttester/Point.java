@@ -33,6 +33,27 @@ public class Point {
         this.score = (String) dict.get("score");
     }
 
+    public void updatePoint( Map<String,Object> dict){
+        if(dict.containsKey("serve")){
+            this.serve = (String)dict.get("serve");
+        }
+        if(dict.containsKey("redRotation")){
+            this.redRotation = Math.toIntExact((Long)dict.get("redRotation"));
+        }
+        if(dict.containsKey("blueRotation")){
+            this.blueRotation = Math.toIntExact((Long)dict.get("blueRotation"));
+        }
+        if(dict.containsKey("who")){
+            this.who = (String) dict.get("who");
+        }
+        if(dict.containsKey("why")){
+            this.why = (String) dict.get("why");
+        }
+        if(dict.containsKey("score")){
+            this.score = (String) dict.get("score");
+        }
+    }
+
     @Override
     public String toString() {
         return "Point{" +
