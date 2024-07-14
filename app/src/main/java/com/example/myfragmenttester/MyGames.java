@@ -69,10 +69,13 @@ public class MyGames extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("clicked on my game");
+
+                //If it is labeled as a public game, check if it is in public games
                 boolean alert = true;
                 if(AppData.myGames.get(position).isPublicGame()) {
                     for (Game g : AppData.publicGames) {
                         if (g.getUid().equals(AppData.myGames.get(position).getUid())) {
+                            System.out.println("Found game in public games");
                             alert = false;
                             break;
                         }
@@ -90,6 +93,7 @@ public class MyGames extends AppCompatActivity {
                                 finish();
                             }
                         });
+                        gameGoneAlert.show();
                     } else {
                         AppData.game = AppData.myGames.get(position);
                         AppData.gameChanged = true;
