@@ -1371,5 +1371,21 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         }
     }
 
+public void gameGoneAlert(){
+    AlertDialog.Builder gameGonealert = new AlertDialog.Builder(getContext());
+    gameGonealert.setTitle("This game is no longer public");
+    gameGonealert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            AppData.myGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+            Collections.reverse(AppData.myGames);
+            Intent intent = new Intent(getActivity(), MyGames.class);
+            //intent.putExtra("meet", meet);
+            startActivity(intent);
+        }
+    });
+    gameGonealert.show();
+
+}
 
 }

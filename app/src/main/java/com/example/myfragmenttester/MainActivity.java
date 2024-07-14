@@ -565,7 +565,26 @@ public class MainActivity extends AppCompatActivity implements
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                System.out.println("Heard game removed");
+                for(int i = 0; i<AppData.publicGames.size(); i++){
+                    Game g = AppData.publicGames.get(i);
+                    if(g.getUid().equals(snapshot.getKey())){
+                        AppData.publicGames.remove(i);
+                        System.out.println("removed game");
+                        if(AppData.game != null && AppData.game.getUid().equals(g.getUid())){
+                            if(ScoreboardFragment.scoreboardFragment != null) {
+                                //ScoreboardFragment.scoreboardFragment.createGame();
+                                ScoreboardFragment.scoreboardFragment.gameGoneAlert();
+                            }
 
+                        }
+                        //If I am on the public games screen, refresh the screen
+                        if(PublicGamesAdapter.publicGamesAdapter != null){
+                            PublicGamesAdapter.publicGamesAdapter.notifyDataSetChanged();
+                        }
+                        break;
+                    }
+                }
             }
 
             @Override

@@ -69,9 +69,38 @@ public class MyGames extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 System.out.println("clicked on my game");
-                AppData.game = AppData.myGames.get(position);
-                AppData.gameChanged = true;
-                finish();
+                boolean alert = true;
+                if(AppData.myGames.get(position).isPublicGame()) {
+                    for (Game g : AppData.publicGames) {
+                        if (g.getUid().equals(AppData.myGames.get(position).getUid())) {
+                            alert = false;
+                            break;
+                        }
+                    }
+                    if (alert) {
+                        AlertDialog.Builder gameGoneAlert = new AlertDialog.Builder(MyGames.this);
+                        gameGoneAlert.setTitle("Game is no longer on database.  Converting to private game.");
+                        gameGoneAlert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                AppData.game = AppData.myGames.get(position);
+                                AppData.game.setPublicGame(false);
+                                AppData.gameChanged = true;
+                                finish();
+                            }
+                        });
+                    } else {
+                        AppData.game = AppData.myGames.get(position);
+                        AppData.gameChanged = true;
+                        finish();
+                    }
+                }
+                else{
+                    AppData.game = AppData.myGames.get(position);
+                    AppData.gameChanged = true;
+                    finish();
+                }
 
             }
         });
