@@ -296,6 +296,28 @@ public class GameStatsAdapter extends ArrayAdapter<ASet> {
                 bluePctEarned.setBackgroundColor(Color.GREEN);
             }
 
+            if(AppData.game.getType()==1){
+                redDigs.setVisibility(View.INVISIBLE);
+                blueDigs.setVisibility(View.INVISIBLE);
+                redAttacks.setVisibility(View.INVISIBLE);
+                blueAttacks.setVisibility(View.INVISIBLE);
+                redHitPct.setVisibility(View.INVISIBLE);
+                blueHitPct.setVisibility(View.INVISIBLE);
+                redPassAvg.setVisibility(View.INVISIBLE);
+                bluePassAvg.setVisibility(View.INVISIBLE);
+
+            }
+            else{
+                redDigs.setVisibility(View.VISIBLE);
+                blueDigs.setVisibility(View.VISIBLE);
+                redAttacks.setVisibility(View.VISIBLE);
+                blueAttacks.setVisibility(View.VISIBLE);
+                redHitPct.setVisibility(View.VISIBLE);
+                blueHitPct.setVisibility(View.VISIBLE);
+                redPassAvg.setVisibility(View.VISIBLE);
+                bluePassAvg.setVisibility(View.VISIBLE);
+            }
+
 
 
 
