@@ -83,7 +83,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         simpleButton = findViewById(R.id.simpleButton);
         advancedButton = findViewById(R.id.advancedButton);
 
-        if(AppData.game.getType() == 0){
+        if(AppData.game.getType() == 1){
             simpleButton.toggle();
         }
         else{
@@ -102,11 +102,12 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         statsModeGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.privateButton){
-                    AppData.game.setType(0);
+                if(checkedId == R.id.simpleButton){
+                    AppData.game.setType(1);
+                    System.out.println("changed to simple");
                 }
                 else{
-                    AppData.game.setType(1);
+                    AppData.game.setType(0);
                 }
             }
         });

@@ -161,10 +161,11 @@ public class MainActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         // always start on scoreboard screen after opening screen has been shown
-        if(!first) {
-            tabLayout.getTabAt(1).select();
-        }
-        first = false;
+      if(AppData.game!= null) {
+
+              tabLayout.getTabAt(1).select();
+
+      }
     }
 
     @Override

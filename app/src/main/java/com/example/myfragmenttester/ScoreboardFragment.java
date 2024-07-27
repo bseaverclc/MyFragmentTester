@@ -79,6 +79,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         if(AppData.game == null) {
             createGame();
         }
+        simpleAdvancedView();
         if(AppData.gameChanged) {
             AppData.gameChanged = false;
             set = AppData.game.getSets().get(0);
@@ -187,6 +188,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     private TextView bluePassAvgView;
     private TextView blueEarnedPctView;
 
+    private TextView redServeReceiveText, blueServeReceiveText;
+    private LinearLayoutCompat redServeReceiveRow, blueServeReceiveRow;
+
     private int rkill = 0;
    // private Game game;
     private ArrayList<String> teams = new ArrayList<String>();
@@ -290,6 +294,12 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     }
 
     private void createButtons(View view){
+        redServeReceiveRow = view.findViewById(R.id.redServeReceiveRow);
+        redServeReceiveText = view.findViewById(R.id.redServeReceiveText);
+        blueServeReceiveRow = view.findViewById(R.id.blueServeReceiveRow);
+        blueServeReceiveText = view.findViewById(R.id.blueServeReceiveText);
+
+
         redScorePanel= view.findViewById(R.id.redScorePanel);
         blueScorePanel = view.findViewById(R.id.blueScorePanel);
         statsHorizontalLayout = view.findViewById(R.id.statsHorizontalLayout);
@@ -508,6 +518,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                 return true;
             }
         });
+
+
 
     }
 
@@ -1386,6 +1398,43 @@ public void gameGoneAlert(){
     });
     gameGonealert.show();
 
+}
+
+public void simpleAdvancedView(){
+    System.out.println("simpleAdvancedView being called");
+        if(AppData.game.getType() == 1){
+            System.out.println("simple game");
+            blueHitPctView.setVisibility(View.INVISIBLE);
+            redHitPctView.setVisibility((View.INVISIBLE));
+            redPassAvgView.setVisibility((View.INVISIBLE));
+            bluePassAvgView.setVisibility((View.INVISIBLE));
+
+            blueAtkButton.setVisibility(View.INVISIBLE);
+            redAtkButton.setVisibility(View.INVISIBLE);
+            redDigButton.setVisibility(View.INVISIBLE);
+            blueDigButton.setVisibility(View.INVISIBLE);
+
+            redServeReceiveText.setVisibility(View.INVISIBLE);
+            blueServeReceiveText.setVisibility(View.INVISIBLE);
+            redServeReceiveRow.setVisibility(View.INVISIBLE);
+            blueServeReceiveRow.setVisibility(View.INVISIBLE);
+        }
+        else{
+            blueHitPctView.setVisibility(View.VISIBLE);
+            redHitPctView.setVisibility((View.VISIBLE));
+            redPassAvgView.setVisibility((View.VISIBLE));
+            bluePassAvgView.setVisibility((View.VISIBLE));
+
+            blueAtkButton.setVisibility(View.VISIBLE);
+            redAtkButton.setVisibility(View.VISIBLE);
+            redDigButton.setVisibility(View.VISIBLE);
+            blueDigButton.setVisibility(View.VISIBLE);
+
+            redServeReceiveText.setVisibility(View.VISIBLE);
+            blueServeReceiveText.setVisibility(View.VISIBLE);
+            redServeReceiveRow.setVisibility(View.VISIBLE);
+            blueServeReceiveRow.setVisibility(View.VISIBLE);
+        }
 }
 
 }
