@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,11 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class PointsHistoryAdapter extends ArrayAdapter<Point> {
 

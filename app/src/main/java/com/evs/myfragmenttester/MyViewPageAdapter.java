@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

@@ -1,8 +1,6 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import android.graphics.Color;
-
-import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
 

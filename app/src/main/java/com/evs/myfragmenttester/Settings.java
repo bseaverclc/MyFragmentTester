@@ -1,9 +1,8 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;

@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

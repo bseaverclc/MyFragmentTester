@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import androidx.appcompat.app.AppCompatActivity;
 

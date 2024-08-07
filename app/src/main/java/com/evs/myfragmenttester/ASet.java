@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import java.util.ArrayList;
 import java.util.HashMap;

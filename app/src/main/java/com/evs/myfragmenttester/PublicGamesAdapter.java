@@ -1,4 +1,4 @@
-package com.example.myfragmenttester;
+package com.evs.myfragmenttester;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,21 +13,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class MyGamesAdapter extends ArrayAdapter<Game> {
+public class PublicGamesAdapter extends ArrayAdapter<Game> {
 
     private ArrayList<Game> theGames;
+    public static PublicGamesAdapter publicGamesAdapter;
 
 
-    public MyGamesAdapter(@NonNull Context context, ArrayList<Game> games) {
-        super(context, R.layout.custom_my_games, games);
+    public PublicGamesAdapter(@NonNull Context context, ArrayList<Game> games) {
+        super(context, R.layout.custom_publicgames, games);
+        publicGamesAdapter = this;
         theGames = games;
     }
 
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View rowView = inflater.inflate(R.layout.custom_my_games, null, true);
-
-
+        View rowView = inflater.inflate(R.layout.custom_publicgames, null, true);
 
         Game rowGame = theGames.get(position);
 
