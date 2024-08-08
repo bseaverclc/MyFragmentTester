@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,12 +94,12 @@ public class MainActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("EVS");
 
-
-        tabLayout = findViewById(R.id.tab_layout);
-        homeTab = findViewById(R.id.HomeTab);
         viewPager2 = findViewById(R.id.view_pager);
         myViewPageAdapter = new MyViewPageAdapter(this);
         viewPager2.setAdapter(myViewPageAdapter);
+        tabLayout = findViewById(R.id.tab_layout);
+        homeTab = findViewById(R.id.HomeTab);
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -108,13 +109,14 @@ public class MainActivity extends AppCompatActivity implements
                     ((LinearLayout) tabLayout.getTabAt(0).view).setVisibility(View.GONE);
                 }
                 if(tab.getPosition() == 1){
-                    getSupportActionBar().setTitle("Scoreboard");
+                    getSupportActionBar().setTitle(Html.fromHtml("<small>Scoreboard</small>"));
+
                 }
                 if(tab.getPosition() == 2){
-                    getSupportActionBar().setTitle("Game Stats");
+                    getSupportActionBar().setTitle(Html.fromHtml("<small>Game Stats</small>"));
                 }
                 if(tab.getPosition() == 3){
-                    getSupportActionBar().setTitle("Point History");
+                    getSupportActionBar().setTitle(Html.fromHtml("<small>Point History</small>"));
                 }
 
             }
@@ -133,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
     }
+
+
 
     public void hideTabBar(){
         //tabLayout.setVisibility(View.GONE);

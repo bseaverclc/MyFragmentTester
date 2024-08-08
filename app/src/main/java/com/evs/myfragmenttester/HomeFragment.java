@@ -49,7 +49,9 @@ public class HomeFragment extends Fragment {
         viewPublic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+               Collections.sort(AppData.publicGames, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+
+               //AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
                 Collections.reverse(AppData.publicGames);
                 Intent intent = new Intent(getActivity(), PublicGames.class);
                 //intent.putExtra("meet", meet);
