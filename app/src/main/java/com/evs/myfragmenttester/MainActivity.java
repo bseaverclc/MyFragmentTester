@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements
         if (id == R.id.publicGames) {
             // DO your stuff
             System.out.println("public games clicked");
-            AppData.publicGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+            Collections.sort(AppData.publicGames, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
             Collections.reverse(AppData.publicGames);
             Intent intent = new Intent(this, PublicGames.class);
             //intent.putExtra("meet", meet);
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements
         if (id == R.id.myGames) {
             // DO your stuff
             System.out.println("myGames clicked");
-            AppData.myGames.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+            Collections.sort(AppData.myGames, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
             Collections.reverse(AppData.myGames);
             Intent intent = new Intent(this, MyGames.class);
             //intent.putExtra("meet", meet);
