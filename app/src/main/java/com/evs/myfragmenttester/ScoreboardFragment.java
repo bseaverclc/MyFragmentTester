@@ -764,8 +764,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         AlertDialog.Builder firstServeAlert = new AlertDialog.Builder(getContext());
         firstServeAlert.setTitle("Who served first?");
         //firstServeAlert.setMessage("Who served first?");
-        String redTeam = "Red Team";
-        String blueTeam = "Blue Team";
+        String redTeam = "Team 1";
+        String blueTeam = "Team 2";
         if(AppData.game.getTeams().get(0).length() != 0){
             redTeam = AppData.game.getTeams().get(0);
         }

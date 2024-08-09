@@ -39,7 +39,7 @@
             android:id="@+id/viewPublicButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "View Pubic Game"
+            android:text = "View Public Games"
             android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:layout_gravity="center"/>

@@ -28,6 +28,7 @@ public class PublicGamesAdapter extends ArrayAdapter<Game> {
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View rowView = inflater.inflate(R.layout.custom_publicgames, null, true);
+        rowView.setKeepScreenOn(true);
 
         Game rowGame = theGames.get(position);
 
