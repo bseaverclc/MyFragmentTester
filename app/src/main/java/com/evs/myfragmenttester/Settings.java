@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 
 import com.google.android.material.button.MaterialButton;
@@ -23,6 +24,8 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private RadioButton blueRot1, blueRot2, blueRot3,blueRot4,blueRot5, blueRot6;
 
     private RadioButton redRot1, redRot2, redRot3,redRot4,redRot5, redRot6;
+
+    private TextView redTeamColorText, blueTeamColorText, redStartingRotationText, blueStartingRotationText;
     int chosenSet = 0;
 
     @Override
@@ -111,11 +114,42 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
             }
         });
 
+        redTeamColorText = findViewById(R.id.redTeamColorText);
+        if(AppData.game.getTeams().get(0).length() == 0){
+            redTeamColorText.setText("Team 1");
+        }
+        else{
+            redTeamColorText.setText(AppData.game.getTeams().get(0));
+        }
+
+        blueTeamColorText = findViewById(R.id.blueTeamColorText);
+        if(AppData.game.getTeams().get(1).length() == 0){
+            blueTeamColorText.setText("Team 2");
+        }
+        else{
+            blueTeamColorText.setText(AppData.game.getTeams().get(1));
+        }
 
         redTeamColor = findViewById(R.id.redTeamColor);
         redTeamColor.setBackgroundColor(AppData.gameRedTeamColor);
         blueTeamColor = findViewById(R.id.blueTeamColor);
         blueTeamColor.setBackgroundColor(AppData.gameBlueTeamColor);
+
+        redStartingRotationText = findViewById(R.id.redStartingRotationText);
+        if(AppData.game.getTeams().get(0).length() == 0){
+            redStartingRotationText.setText("Team 1\nStarting Rotation");
+        }
+        else{
+            redStartingRotationText.setText(AppData.game.getTeams().get(0) + "\nStarting Rotation");
+        }
+
+        blueStartingRotationText = findViewById(R.id.blueStartingRotationText);
+        if(AppData.game.getTeams().get(1).length() == 0){
+            blueStartingRotationText.setText("Team 2\nStarting Rotation");
+        }
+        else{
+            blueStartingRotationText.setText(AppData.game.getTeams().get(1) + "\nStarting Rotation");
+        }
 
         getSupportActionBar().setTitle("Settings");
 

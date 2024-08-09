@@ -25,6 +25,7 @@ public class PointHistoryFragment extends Fragment {
  private TextView redTextView, blueTextView, setTextView;
  private TextView redRotation1, redRotation2, redRotation3, redRotation4, redRotation5,redRotation6;
     private TextView blueRotation1, blueRotation2, blueRotation3, blueRotation4, blueRotation5,blueRotation6;
+    private TextView redTeamRotationName, blueTeamRotationName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +55,9 @@ public class PointHistoryFragment extends Fragment {
         blueRotation4 = theView.findViewById(R.id.blueRotation4);
         blueRotation5 = theView.findViewById(R.id.blueRotation5);
         blueRotation6 = theView.findViewById(R.id.blueRotation6);
+
+        redTeamRotationName = theView.findViewById(R.id.redTeamRotationName);
+        blueTeamRotationName = theView.findViewById(R.id.blueTeamRotationName);
         return v;
 
 
@@ -62,9 +66,29 @@ public class PointHistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        ((MainActivity)getActivity()).tabLayout.getTabAt(3).select();
 
-        redTextView.setText(AppData.game.getTeams().get(0));
-        blueTextView.setText(AppData.game.getTeams().get(1));
+
+
+        if(AppData.game.getTeams().get(0).length() == 0){
+            redTeamRotationName.setText("Team 1");
+            redTextView.setText("Team 1");
+        }
+        else{
+            redTeamRotationName.setText(AppData.game.getTeams().get(0));
+            redTextView.setText(AppData.game.getTeams().get(0));
+        }
+
+        if(AppData.game.getTeams().get(1).length() == 0){
+            blueTeamRotationName.setText("Team 2");
+            blueTextView.setText("Team 2");
+        }
+        else{
+            blueTeamRotationName.setText(AppData.game.getTeams().get(1));
+            blueTextView.setText(AppData.game.getTeams().get(1));
+        }
+
+
 
 
         setTextView.setText("Set " + (AppData.selectedSet + 1));

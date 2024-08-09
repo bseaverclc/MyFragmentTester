@@ -30,7 +30,7 @@
         android:id="@+id/createGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text = "Create Game"
+        android:text = "New Game"
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
         android:layout_gravity="center"

@@ -52,13 +52,21 @@ public class PointsHistoryAdapter extends ArrayAdapter<Point> {
             }
         }
         scoreText.setText(thePoints.get(position).getScore());
-        redRotateText.setText(""+(thePoints.get(position).getRedRotation()+1));
+
         if(thePoints.get(position).getServe().equals("red")){
+            redRotateText.setText("*"+(thePoints.get(position).getRedRotation()+1));
             redRotateText.setBackgroundColor(Color.YELLOW);
         }
-        blueRotateText.setText(""+(thePoints.get(position).getBlueRotation()+1));
+        else{
+            redRotateText.setText(""+(thePoints.get(position).getRedRotation()+1));
+        }
+
         if(thePoints.get(position).getServe().equals("blue")){
+            blueRotateText.setText("*"+(thePoints.get(position).getBlueRotation()+1));
             blueRotateText.setBackgroundColor(Color.YELLOW);
+        }
+        else{
+            blueRotateText.setText(""+(thePoints.get(position).getBlueRotation()+1));
         }
         //view.setMinimumHeight((int)(view.getParent().getHeight()*.10));
 

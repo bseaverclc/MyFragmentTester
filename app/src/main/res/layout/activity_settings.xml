@@ -20,6 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Visibility"
+                android:textStyle="bold"
                 android:layout_weight="50"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_vertical"/>
@@ -68,6 +69,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Stats Mode"
+                android:textStyle="bold"
                 android:layout_weight="50"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_vertical"/>
@@ -89,6 +91,9 @@
                     android:layout_height="wrap_content"
                     android:text="Simple"
                     android:gravity="center"
+                    android:textSize="12dp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
                     android:padding="1dp"
 
 
@@ -99,6 +104,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Advanced"
+                    android:textSize="12dp"
+                    android:maxLines="1"
+                    android:autoSizeTextType="uniform"
                     android:gravity="center"
 
                     />
@@ -116,6 +124,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Red Team Color"
+            android:textStyle="bold"
             android:layout_weight="50"
             android:layout_margin="10dp"
             android:layout_gravity="center_vertical"/>
@@ -147,6 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Blue Team Color"
+                android:textStyle="bold"
                 android:layout_weight="50"
                 android:layout_margin="10dp"
                 android:layout_gravity="center_vertical"/>
@@ -261,11 +271,13 @@
             android:weightSum="100">
 
             <TextView
+                android:id="@+id/redStartingRotationText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:text="Red Starting Rotation"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -359,12 +371,14 @@
             android:weightSum="100">
 
             <TextView
+                android:id="@+id/blueStartingRotationText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:text="Blue Starting Rotation"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
+                android:textStyle="bold"
                 />
 
             <RadioGroup

@@ -167,6 +167,7 @@
                         android:textAlignment="center"
                         android:background="@color/white"
                         android:imeOptions="actionDone"
+                        android:singleLine="true"
                         android:layout_margin="5dp"
 
                         />
@@ -322,8 +323,9 @@
                             android:gravity="center"
                             android:text="Kill"
                             android:layout_weight="8"
+                            android:maxLines="1"
                             android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="8dp"
+                            android:autoSizeMinTextSize="4dp"
                             android:autoSizeMaxTextSize="100dp"
                             android:textColor="@color/black"
                             />
@@ -637,8 +639,9 @@
                             android:gravity="center"
                             android:text="Kill"
                             android:layout_weight="8"
+                            android:maxLines="1"
                             android:autoSizeTextType="uniform"
-                            android:autoSizeMinTextSize="8dp"
+                            android:autoSizeMinTextSize="4dp"
                             android:autoSizeMaxTextSize="100dp"
                             android:textColor="@color/black"
                             />

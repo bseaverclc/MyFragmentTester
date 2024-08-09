@@ -40,7 +40,7 @@ public class GameStatsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        ((MainActivity)getActivity()).tabLayout.getTabAt(2).select();
 
         gameStatsAdapter = new GameStatsAdapter(getContext(), AppData.game.getSets());
         listView.setAdapter(gameStatsAdapter);

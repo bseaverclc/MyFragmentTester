@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/my_drawer_layout"
     tools:context=".MainActivity"
+
     >
 
     <LinearLayout
@@ -15,22 +16,14 @@
         >
 
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".95"
-            android:id="@+id/view_pager"
 
-
-
-            />
 
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/tab_layout"
-        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
         app:tabSelectedTextColor="@color/blue"
         android:layout_weight=".05"
         >
@@ -69,7 +62,15 @@
     </com.google.android.material.tabs.TabLayout>
 
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".95"
+            android:id="@+id/view_pager"
 
+
+
+            />
 
 
 

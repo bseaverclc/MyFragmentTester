@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -45,6 +46,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_scoreboard, container, false);
+        v.setKeepScreenOn(true);
         scoreboardFragment = this;
         ((MainActivity)getActivity()).showTabBar();
         ((MainActivity)getActivity()).menu.findItem(R.id.settingsButton).setVisible(true);
@@ -72,6 +74,7 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
     public void onResume() {
         System.out.println("On Resume from Scoreboard Fragment");
         super.onResume();
+        ((MainActivity)getActivity()).tabLayout.getTabAt(1).select();
         if(AppData.game == null) {
             createGame();
         }
@@ -201,6 +204,8 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
         redTeamEditText = view.findViewById(R.id.redTeamName);
         blueTeamEditText = view.findViewById(R.id.blueTeamName);
 
+        //redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
 
 //        redTeamEditText.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -234,9 +239,11 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
 
 
                     redTeamEditText.clearFocus();
-                   // redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                   //redTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
                     AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     updateScreen();
                     return false;
                 }
@@ -258,6 +265,9 @@ public class ScoreboardFragment extends Fragment implements View.OnClickListener
                     //blueTeamEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     AppData.game.getTeams().set(1, blueTeamEditText.getText().toString());
                     AppData.game.getTeams().set(0, redTeamEditText.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    updateScreen();
                     return false;
                 }
                 return false;

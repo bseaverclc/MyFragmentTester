@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements
 
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("EVS");
+        getSupportActionBar().setTitle("");
+
 
         viewPager2 = findViewById(R.id.view_pager);
         myViewPageAdapter = new MyViewPageAdapter(this);
@@ -108,16 +109,16 @@ public class MainActivity extends AppCompatActivity implements
                 if(tab.getPosition()>0){
                     ((LinearLayout) tabLayout.getTabAt(0).view).setVisibility(View.GONE);
                 }
-                if(tab.getPosition() == 1){
-                    getSupportActionBar().setTitle(Html.fromHtml("<small>Scoreboard</small>"));
-
-                }
-                if(tab.getPosition() == 2){
-                    getSupportActionBar().setTitle(Html.fromHtml("<small>Game Stats</small>"));
-                }
-                if(tab.getPosition() == 3){
-                    getSupportActionBar().setTitle(Html.fromHtml("<small>Point History</small>"));
-                }
+//                if(tab.getPosition() == 1){
+//                    getSupportActionBar().setTitle(Html.fromHtml("<small>Scoreboard</small>"));
+//
+//                }
+//                if(tab.getPosition() == 2){
+//                    getSupportActionBar().setTitle(Html.fromHtml("<small>Game Stats</small>"));
+//                }
+//                if(tab.getPosition() == 3){
+//                    getSupportActionBar().setTitle(Html.fromHtml("<small>Point History</small>"));
+//                }
 
             }
 
@@ -158,8 +159,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onResume();
         // always start on scoreboard screen after opening screen has been shown
       if(AppData.game!= null) {
+             if (tabLayout.getSelectedTabPosition() == 0){
+                 tabLayout.getTabAt(1).select();
+             }
 
-              tabLayout.getTabAt(1).select();
 
       }
     }
